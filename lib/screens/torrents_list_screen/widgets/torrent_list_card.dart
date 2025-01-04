@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
-import 'package:qbittorrent_client/repositories/torrent_info.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/repositories/utils.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/torrent_card_screen.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/line_progress_widget.dart';
@@ -13,7 +13,7 @@ class TorrentListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addedOn = DateTime.fromMillisecondsSinceEpoch(item.addedOn * 1000).toLocal().toString();
+    final addedOn = DateTime.fromMillisecondsSinceEpoch(item.addedOn! * 1000).toLocal().toString();
 
     return GestureDetector(
       onTap: () {
@@ -27,7 +27,7 @@ class TorrentListCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.name,
+              Text(item.name!,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold)
@@ -47,7 +47,7 @@ class TorrentListCard extends StatelessWidget {
                     children: [
                       Icon(Icons.storage, size: 16),
                       SizedBox(width: 4),
-                      Text(formatBytes(item.size)),
+                      Text(formatBytes(item.size!)),
                     ],
                   ),
                 ],
@@ -56,17 +56,17 @@ class TorrentListCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${(item.progress * 100).toStringAsFixed(0)}%",
+                  Text("${(item.progress! * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                           fontSize: 18,
                           color: Color.fromRGBO(7, 119, 245, 1.0),
                           fontWeight: FontWeight.bold,
                       )),
-                  Text(item.state),
+                  Text(item.state!),
                 ],
               ),
               SizedBox(height: 5),
-              LineProgressWidget(progress: item.progress),
+              LineProgressWidget(progress: item.progress!),
               SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,14 +79,14 @@ class TorrentListCard extends StatelessWidget {
                           children: [
                             Icon(Icons.download),
                             SizedBox(width: 4),
-                            Text(formatSpeed (item.dlspeed) ),
+                            Text(formatSpeed (item.dlspeed!) ),
                           ],
                         ),
                         Row(
                           children: [
                             Icon(Icons.upload),
                             SizedBox(width: 4),
-                            Text(formatSpeed(item.upspeed)),
+                            Text(formatSpeed(item.upspeed!)),
                           ],
                         ),
                       ],

@@ -30,5 +30,20 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeName</key>
+        <string>Torrent File</string>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>torrent</string>
+        </array>
+        <key>LSHandlerRank</key>
+        <string>Owner</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+    </array>
 </dict>
 </plist>

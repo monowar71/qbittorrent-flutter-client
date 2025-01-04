@@ -45,11 +45,11 @@ class _LabeledSwitchState extends State<LabeledSwitch> {
               });
               widget.onChanged(newValue);
             },
-            activeColor: Colors.purple,
+            activeColor: Colors.blueAccent,
           ),
           Text(
             widget.label,
-            style: const TextStyle(color: Colors.white),
+            //style: const TextStyle(color: Colors.white),
           ),
         ],
       ),

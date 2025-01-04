@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qbittorrent_client/repositories/torrent_info.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
 
 class SeedPeersInfo extends StatelessWidget {
   const SeedPeersInfo({

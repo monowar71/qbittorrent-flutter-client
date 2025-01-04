@@ -1,19 +1,31 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/models/added_torrent_settings.dart';
 import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
+import 'package:qbittorrent_client/screens/auth_screen/widgets/labeled_switch.dart';
 
 class AddTorrentDialog extends StatefulWidget {
+  final String? torrentPath;
+
+  const AddTorrentDialog({super.key, this.torrentPath});
   @override
   _AddTorrentDialogState createState() => _AddTorrentDialogState();
 }
 
 class _AddTorrentDialogState extends State<AddTorrentDialog> {
   final TextEditingController magnetController = TextEditingController();
-  String? selectedFile;
+  AddedTorrentSettings? addedTorrentSettings;
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.torrentPath != null){
+      setState(() {
+        addedTorrentSettings = AddedTorrentSettings(filePath: widget.torrentPath!);
+      });
+    }
+
     return AlertDialog(
       title: const Text('Добавить торрент'),
       content: Column(
@@ -27,16 +39,32 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
                 icon: const Icon(Icons.folder_open),
                 label: const Text('Выбрать файл'),
               ),
-              if (selectedFile != null)
+              if (addedTorrentSettings != null)
                 TextButton(
                   onPressed: _clearSelectedFile,
-                  child: const Text('Очистить', style: TextStyle(color: Colors.red)),
+                  child: const Text(
+                      'Очистить', style: TextStyle(color: Colors.red)),
                 ),
+
             ],
           ),
-          if (selectedFile != null) ...[
+          if (addedTorrentSettings != null) ...[
             const SizedBox(height: 16),
-            Text('Выбранный файл: ${selectedFile!.split('/').last}'),
+            Text('Выбранный файл: ${addedTorrentSettings!.filePath!.split('/').last}'),
+            Column(
+               mainAxisSize: MainAxisSize.min,
+              children: [
+                LabeledSwitch(label: "Пауза при старте", initialValue: false, onChanged: (e){
+                  addedTorrentSettings?.paused = !e;
+                }),
+                LabeledSwitch(label: "Пропустить проверку", initialValue: false, onChanged: (e){
+                  addedTorrentSettings?.skipChecking = !e;
+                }),
+              ],
+            ),
+
+
+
           ],
           const SizedBox(height: 16),
           const Text('Или введите magnet-ссылку:'),
@@ -70,7 +98,8 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
         final filePath = result.files.single.path!;
         if (filePath.endsWith('.torrent')) {
           setState(() {
-            selectedFile = filePath;
+            addedTorrentSettings = AddedTorrentSettings(filePath: filePath);
+            //selectedFile = filePath;
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -85,15 +114,15 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
 
   void _clearSelectedFile() {
     setState(() {
-      selectedFile = null;
+      addedTorrentSettings = null;
     });
   }
 
   Future<void> _addTorrent() async {
     final qbApi = GetIt.I<QbittorrentWebApi>();
     try {
-      if (selectedFile != null) {
-        await qbApi.uploadTorrentFile(selectedFile!, paused: false);
+      if (addedTorrentSettings != null) {
+        await qbApi.uploadTorrentFile(addedTorrentSettings!);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Файл успешно добавлен')),
         );

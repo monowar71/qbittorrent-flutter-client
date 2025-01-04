@@ -5,98 +5,98 @@ part 'torrent_info.g.dart';
 @JsonSerializable()
 class TorrentInfo {
   @JsonKey(name: 'added_on')
-  final int addedOn;
+  final int? addedOn;
   @JsonKey(name: 'amount_left')
-  final int amountLeft;
+  final int? amountLeft;
   @JsonKey(name: 'auto_tmm')
-  final bool autoTmm;
-  final double availability;
-  final String category;
-  final String comment;
+  final bool? autoTmm;
+  final double? availability;
+  final String? category;
+  final String? comment;
   final int completed;
   @JsonKey(name: 'completion_on')
-  final int completionOn;
+  final int? completionOn;
   @JsonKey(name: 'content_path')
-  final String contentPath;
+  final String? contentPath;
   @JsonKey(name: 'dl_limit')
-  final int dlLimit;
-  final int dlspeed;
+  final int? dlLimit;
+  final int? dlspeed;
   @JsonKey(name: 'download_path')
-  final String downloadPath;
-  final int downloaded;
+  final String? downloadPath;
+  final int? downloaded;
   @JsonKey(name: 'downloaded_session')
-  final int downloadedSession;
-  final int eta;
+  final int? downloadedSession;
+  final int? eta;
   @JsonKey(name: 'f_l_piece_prio')
-  final bool firstLastPiecePrio;
+  final bool? firstLastPiecePrio;
   @JsonKey(name: 'force_start')
-  final bool forceStart;
+  final bool? forceStart;
   @JsonKey(name: 'has_metadata')
-  final bool hasMetadata;
-  final String hash;
+  final bool? hasMetadata;
+  final String? hash;
   @JsonKey(name: 'inactive_seeding_time_limit')
-  final int inactiveSeedingTimeLimit;
+  final int? inactiveSeedingTimeLimit;
   @JsonKey(name: 'infohash_v1')
-  final String infohashV1;
+  final String? infohashV1;
   @JsonKey(name: 'infohash_v2')
-  final String infohashV2;
+  final String? infohashV2;
   @JsonKey(name: 'last_activity')
-  final int lastActivity;
+  final int? lastActivity;
   @JsonKey(name: 'magnet_uri')
-  final String magnetUri;
+  final String? magnetUri;
   @JsonKey(name: 'max_inactive_seeding_time')
-  final int maxInactiveSeedingTime;
+  final int? maxInactiveSeedingTime;
   @JsonKey(name: 'max_ratio')
-  final double maxRatio;
+  final double? maxRatio;
   @JsonKey(name: 'max_seeding_time')
-  final int maxSeedingTime;
-  final String name;
+  final int? maxSeedingTime;
+  final String? name;
   @JsonKey(name: 'num_complete')
-  final int numComplete;
+  final int? numComplete;
   @JsonKey(name: 'num_incomplete')
-  final int numIncomplete;
+  final int? numIncomplete;
   @JsonKey(name: 'num_leechs')
-  final int numLeechs;
+  final int? numLeechs;
   @JsonKey(name: 'num_seeds')
-  final int numSeeds;
-  final double popularity;
-  final int priority;
-  final bool private;
-  final double progress;
-  final double ratio;
+  final int? numSeeds;
+  final double? popularity;
+  final int? priority;
+  final bool? private;
+  final double? progress;
+  final double? ratio;
   @JsonKey(name: 'ratio_limit')
-  final int ratioLimit;
-  final int reannounce;
+  final int? ratioLimit;
+  final int? reannounce;
   @JsonKey(name: 'root_path')
-  final String rootPath;
+  final String? rootPath;
   @JsonKey(name: 'save_path')
-  final String savePath;
+  final String? savePath;
   @JsonKey(name: 'seeding_time')
-  final int seedingTime;
+  final int? seedingTime;
   @JsonKey(name: 'seeding_time_limit')
-  final int seedingTimeLimit;
+  final int? seedingTimeLimit;
   @JsonKey(name: 'seen_complete')
-  final int seenComplete;
+  final int? seenComplete;
   @JsonKey(name: 'seq_dl')
-  final bool sequentialDownload;
-  final int size;
-  final String state;
+  final bool? sequentialDownload;
+  final int? size;
+  final String? state;
   @JsonKey(name: 'super_seeding')
-  final bool superSeeding;
-  final String tags;
+  final bool? superSeeding;
+  final String? tags;
   @JsonKey(name: 'time_active')
-  final int timeActive;
+  final int? timeActive;
   @JsonKey(name: 'total_size')
-  final int totalSize;
-  final String tracker;
+  final int? totalSize;
+  final String? tracker;
   @JsonKey(name: 'trackers_count')
-  final int trackersCount;
+  final int? trackersCount;
   @JsonKey(name: 'up_limit')
-  final int upLimit;
-  final int uploaded;
+  final int? upLimit;
+  final int? uploaded;
   @JsonKey(name: 'uploaded_session')
-  final int uploadedSession;
-  final int upspeed;
+  final int? uploadedSession;
+  final int? upspeed;
 
   TorrentInfo({
     required this.addedOn,
@@ -160,5 +160,6 @@ class TorrentInfo {
 
   factory TorrentInfo.fromJson(Map<String, dynamic> json) =>
       _$TorrentInfoFromJson(json);
+
   Map<String, dynamic> toJson() => _$TorrentInfoToJson(this);
 }

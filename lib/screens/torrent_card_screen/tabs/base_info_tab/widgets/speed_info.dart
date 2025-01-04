@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qbittorrent_client/repositories/torrent_info.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/repositories/utils.dart';
 
 class SpeedInfo extends StatelessWidget {
@@ -16,7 +16,7 @@ class SpeedInfo extends StatelessWidget {
             Icon(Icons.arrow_downward, color: Colors.blue, size: 16),
             SizedBox(width: 8),
             Text(
-              'DOWNLOAD: ${formatSpeed(torrentInfo.dlspeed)}',
+              'DOWNLOAD: ${formatSpeed(torrentInfo.dlspeed!)}',
               style: TextStyle(color: Colors.blue, fontSize: 14),
             ),
           ],
@@ -26,7 +26,7 @@ class SpeedInfo extends StatelessWidget {
             Icon(Icons.arrow_upward, color: Colors.red, size: 16),
             SizedBox(width: 8),
             Text(
-              'UPLOAD: ${formatSpeed(torrentInfo.upspeed)}',
+              'UPLOAD: ${formatSpeed(torrentInfo.upspeed!)}',
               style: TextStyle(color: Colors.red, fontSize: 14),
             ),
           ],

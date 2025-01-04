@@ -1,11 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:qbittorrent_client/repositories/file_info.dart';
-import 'package:qbittorrent_client/repositories/torrent_info.dart';
+import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/models/added_torrent_settings.dart';
+import 'package:qbittorrent_client/models/file_info.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
+import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 
 import 'utils.dart';
 
 class QbittorrentWebApi {
   QbittorrentWebApi({required this.dio});
+
+  static const String _keyAddress = 'address';
+  static const String _keyPort = 'port';
+  static const String _keyHttps = 'https';
 
   // Endpoints
   static const String _endpointLogin = "api/v2/auth/login";
@@ -15,6 +22,7 @@ class QbittorrentWebApi {
   static const String _endpointTorrentFiles = "api/v2/torrents/files";
   static const String _endpointTorrentDelete = "api/v2/torrents/delete";
   static const String _endpointTorrentAdd = "api/v2/torrents/add";
+  static const String _endpointTorrentFilePrio = "api/v2/torrents/filePrio";
 
 
   String? _sid;
@@ -28,6 +36,41 @@ class QbittorrentWebApi {
     return '$protocol://$address:$port';
   }
 
+  Future<bool> tryRestoreSession() async {
+
+    final address = await GetIt.I.get<LocalStorageRepository>().getString(_keyAddress);
+    final port = await GetIt.I.get<LocalStorageRepository>().getString(_keyPort);
+    final useHttps = await GetIt.I.get<LocalStorageRepository>().getBool(_keyHttps);
+
+    if(address == null || port == null || useHttps == null) {
+      return false;
+    }
+
+    _baseUrl = _buildBaseUrl(address, useHttps, port);
+    if(_baseUrl == null || _baseUrl!.isEmpty) {
+      return false;
+    }
+
+    final sidFromStorage = await GetIt.I.get<LocalStorageRepository>().getString('sid');
+
+    if(sidFromStorage != null) {
+      _sid = sidFromStorage;
+      final test = await getTorrentsList();
+
+      if(test == null || test.isEmpty)
+      {
+        _sid = null;
+        await GetIt.I.get<LocalStorageRepository>().saveString('sid', "");
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Logs in and retrieves the session ID (SID).
   Future<bool> tryLogin({
     required String address,
@@ -36,10 +79,15 @@ class QbittorrentWebApi {
     required String username,
     required String password,
   }) async {
+
+
+    if(await tryRestoreSession()) {
+      return true;
+    }
+
     if (_sid != null) return true;
 
     _baseUrl = _buildBaseUrl(address, https, port);
-
     try {
       final response = await dio.post(
         '$_baseUrl/$_endpointLogin',
@@ -57,7 +105,10 @@ class QbittorrentWebApi {
         final cookies = response.headers['set-cookie'];
         if (cookies != null && cookies.isNotEmpty) {
           _sid = extractSID(cookies.first);
-          if (_sid != null) return true;
+          if (_sid != null) {
+            await GetIt.I.get<LocalStorageRepository>().saveString('sid', _sid!);
+            return true;
+          }
         }
       }
       return false;
@@ -76,10 +127,13 @@ class QbittorrentWebApi {
       );
 
       final data = response.data as List;
+      //print(data);
+      //data.toList().map((e) => print(e));
       return data.map((e) => TorrentInfo.fromJson(e)).toList();
     } catch (e) {
       print('Failed to fetch torrents list: $e');
-      rethrow;
+      //throw e;
+      return List.empty();
     }
   }
 
@@ -156,15 +210,38 @@ class QbittorrentWebApi {
       rethrow;
     }
   }
+  Future<void> setFilePriority(String torrentHash, String fileId, int priority) async {
+    try {
+      await dio.post(
+        '$_baseUrl/$_endpointTorrentFilePrio',
+        data: {
+          'hash': torrentHash, //convertHashesToString(hashes),
+          'id': fileId,
+          'priority': priority,
+
+        },
+        options: _authHeaders(),
+      );
+    } catch (e) {
+      print('Failed to perform file priority on torrents: $e');
+      rethrow;
+    }
+  }
 
   /// Uploads a `.torrent` file to the server.
-  Future<void> uploadTorrentFile(String filePath, {String? savePath, bool paused = false}) async {
+  Future<void> uploadTorrentFile(
+      AddedTorrentSettings torrentSetting) async {
     try {
-      final file = await MultipartFile.fromFile(filePath, filename: filePath.split('/').last);
+      final file = await MultipartFile.fromFile(torrentSetting.filePath, filename: torrentSetting.filePath.split('/').last);
       final formData = FormData.fromMap({
         'torrents': file,
-        'savepath': savePath ?? '',
-        'paused': paused.toString(),
+        'savepath': torrentSetting.savePath ?? '',
+        //'category': category ?? '',
+        'skip_checking': torrentSetting.skipChecking ?? '',
+        //'paused': paused ?? '',
+        'paused': torrentSetting.paused.toString(),
+        'rename': torrentSetting.rename ?? '',
+
       });
 
       final response = await dio.post(

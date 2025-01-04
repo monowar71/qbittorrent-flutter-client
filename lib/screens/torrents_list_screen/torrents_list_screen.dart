@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
-import 'package:qbittorrent_client/repositories/torrent_info.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/add_torrent_dialog.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/torrent_list_card.dart';
 
@@ -23,6 +24,24 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
     super.initState();
     _getTorrentsList();
     _startAutoRefresh();
+
+    const MethodChannel fileOpenChannel = MethodChannel('file_open_channel');
+    fileOpenChannel.setMethodCallHandler((call) async {
+      if (call.method == 'onFileOpen') {
+        final List<dynamic> files = call.arguments;
+        debugPrint('Opened files: $files');
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AddTorrentDialog(torrentPath: files.first),
+        );
+        // setState(() {
+        //   print(files.isNotEmpty ? files.first : "No file opened");
+        // });
+      }
+    });
+
+
   }
 
   void _startAutoRefresh() {
@@ -36,7 +55,7 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
       final torrents = await GetIt.I<QbittorrentWebApi>().getTorrentsList();
       setState(() {
         downloads = torrents;
-        downloads.sort((a, b) => b.addedOn.compareTo(a.addedOn));
+        downloads.sort((a, b) => b.addedOn!.compareTo(a.addedOn!));
         isLoading = false;
       });
     } catch (e) {
