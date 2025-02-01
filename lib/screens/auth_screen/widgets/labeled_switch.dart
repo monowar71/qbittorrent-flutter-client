@@ -49,7 +49,6 @@ class _LabeledSwitchState extends State<LabeledSwitch> {
           ),
           Text(
             widget.label,
-            //style: const TextStyle(color: Colors.white),
           ),
         ],
       ),

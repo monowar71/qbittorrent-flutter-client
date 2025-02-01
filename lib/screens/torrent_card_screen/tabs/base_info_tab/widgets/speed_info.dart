@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
-import 'package:qbittorrent_client/repositories/utils.dart';
+import 'package:qbittorrent_client/utils.dart';
 
 class SpeedInfo extends StatelessWidget {
   const SpeedInfo({super.key, required this.torrentInfo});

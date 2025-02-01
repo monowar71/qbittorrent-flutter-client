@@ -5,7 +5,7 @@ import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 class QbittorrentWebApi {
   QbittorrentWebApi({required this.dio});

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/bloc/auth/auth_bloc.dart';
+import 'package:qbittorrent_client/consts.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
-import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
-import 'package:qbittorrent_client/screens/torrents_list_screen/torrents_list_screen.dart';
+import 'package:qbittorrent_client/screens/auth_screen/widgets/auth_labled_textfield.dart';
+import 'package:qbittorrent_client/screens/auth_screen/widgets/labeled_switch.dart';
 
-import 'widgets/auth_labled_textfield.dart';
-import 'widgets/labeled_switch.dart';
-
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+class AuthScreenNew extends StatefulWidget {
+  AuthScreenNew({super.key});
 
   @override
-  _AuthScreenState createState() => _AuthScreenState();
+  State<AuthScreenNew> createState() => _AuthScreenNewState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenNewState extends State<AuthScreenNew> {
+  final localStorageRepository = GetIt.I<LocalStorageRepository>();
+
   final addressEditingController = TextEditingController();
   final portEditingController = TextEditingController();
   final usernameEditingController = TextEditingController();
@@ -22,175 +24,163 @@ class _AuthScreenState extends State<AuthScreen> {
   bool https = false;
   bool saveCredentials = false;
 
-  final localStorageRepository = GetIt.I.get<LocalStorageRepository>();
+  void _tryGetStoringCredentials() async {
+      addressEditingController.text =
+          await localStorageRepository.getString(Consts.keyAddress) ?? '';
+      portEditingController.text =
+          await localStorageRepository.getString(Consts.keyPort) ?? '8080';
+      https = await localStorageRepository.getBool(Consts.keyHttps) ?? false;
+      usernameEditingController.text =
+          await localStorageRepository.getString(Consts.keyUsername) ?? '';
+      passwordEditingController.text =
+          await localStorageRepository.getString(Consts.keyPassword) ?? '';
 
-  static const String _keyAddress = 'address';
-  static const String _keyPort = 'port';
-  static const String _keyHttps = 'https';
-  static const String _keyUsername = 'username';
-  static const String _keyPassword = 'password';
+      if(addressEditingController.text.isNotEmpty &&
+          portEditingController.text.isNotEmpty &&
+          usernameEditingController.text.isNotEmpty &&
+          passwordEditingController.text.isNotEmpty)
+      {
+        if (!mounted) return;
 
-  Future<void> _loadCredentials() async {
-    addressEditingController.text =
-        await localStorageRepository.getString(_keyAddress) ?? '';
-    portEditingController.text =
-        await localStorageRepository.getString(_keyPort) ?? '';
-    https = await localStorageRepository.getBool(_keyHttps) ?? false;
-    usernameEditingController.text =
-        await localStorageRepository.getString(_keyUsername) ?? '';
-    passwordEditingController.text =
-        await localStorageRepository.getString(_keyPassword) ?? '';
-    setState(() {});
+        context.read<AuthBloc>().add(
+            LoginEvent(
+              username: usernameEditingController.text,
+              password: passwordEditingController.text,
+              serverIp: addressEditingController.text,
+              serverPort: portEditingController.text,
+              isHTTPS: https,
+              isSaveCredentials: saveCredentials,
+            ));
+      }
+
+      setState(() {}
+    );
   }
-
-  Future<void> _saveCredentials() async {
-    await localStorageRepository.saveString(
-        _keyAddress, addressEditingController.text);
-    await localStorageRepository.saveString(
-        _keyPort, portEditingController.text);
-    await localStorageRepository.saveBool(_keyHttps, https);
-    await localStorageRepository.saveString(
-        _keyUsername, usernameEditingController.text);
-    await localStorageRepository.saveString(
-        _keyPassword, passwordEditingController.text);
-  }
-
-  Future<bool> _tryRestoreSession() async {
-    if(  await GetIt.I.get<QbittorrentWebApi>().tryRestoreSession()){
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TorrentsListScreen(),
-        ),
-      );
-      return true;
-    }
-    return false;
-  }
-
   @override
   void initState() {
     super.initState();
 
-    _tryRestoreSession();
-    _loadCredentials();
+    _tryGetStoringCredentials();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Spacer(),
-            Center(
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.storage,
-                    size: 100,
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushReplacementNamed(context, '/torrents');
+          }
+          if (state is AuthFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            return Center(child: const CircularProgressIndicator());
+          }
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Spacer(),
+                Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.storage,
+                        size: 100,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Qbittorrent Client',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Qbittorrent Client',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                ),
+                const Spacer(),
+                AuthLabeledTextfield(
+                  labelText: 'Server IP или DDNS',
+                  controller: addressEditingController,
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AuthLabeledTextfield(
+                        labelText: 'Номер порта',
+                        controller: portEditingController,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    LabeledSwitch(
+                      label: 'HTTPS',
+                      initialValue: https,
+                      onChanged: (value) {
+                        https = value;
+                        },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                AuthLabeledTextfield(
+                  labelText: 'Имя пользователя',
+                  controller: usernameEditingController,
+                ),
+                const SizedBox(height: 12),
+                AuthLabeledTextfield(
+                  labelText: 'Пароль',
+                  controller: passwordEditingController,
+                  obscureText: true,
+                ),
+                const SizedBox(height: 12),
+                LabeledSwitch(
+                  label: 'Сохранить?',
+                  initialValue: saveCredentials,
+                  onChanged: (value) {
+                    saveCredentials = value;
+                    },
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                        LoginEvent(
+                          username: usernameEditingController.text,
+                          password: passwordEditingController.text,
+                          serverIp: addressEditingController.text,
+                          serverPort: portEditingController.text,
+                          isHTTPS: https,
+                          isSaveCredentials: saveCredentials,
+                        ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                ],
-              ),
-            ),
-            const Spacer(),
-            AuthLabeledTextfield(
-              labelText: 'Server IP или DDNS',
-              controller: addressEditingController,
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: AuthLabeledTextfield(
-                    labelText: 'Номер порта',
-                    controller: portEditingController,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
+                    child: Text('Войти',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                LabeledSwitch(
-                  label: 'HTTPS',
-                  initialValue: https,
-                  onChanged: (value) {
-                    setState(() {
-                      https = value;
-                    });
-                  },
-                ),
+                const Spacer(),
               ],
             ),
-            const SizedBox(height: 12),
-            AuthLabeledTextfield(
-              labelText: 'Имя пользователя',
-              controller: usernameEditingController,
-            ),
-            const SizedBox(height: 12),
-            AuthLabeledTextfield(
-              labelText: 'Пароль',
-              controller: passwordEditingController,
-              obscureText: true,
-            ),
-            const SizedBox(height: 12),
-            LabeledSwitch(
-              label: 'Сохранить?',
-              initialValue: saveCredentials,
-              onChanged: (value) {
-                setState(() {
-                  saveCredentials = value;
-                });
-              },
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () async {
-                bool result = await GetIt.I.get<QbittorrentWebApi>().tryLogin(
-                  address: addressEditingController.text,
-                  port: portEditingController.text,
-                  https: https,
-                  username: usernameEditingController.text,
-                  password: passwordEditingController.text,
-                );
-                if (result) {
-                  if (saveCredentials) {
-                    await _saveCredentials();
-                  }
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TorrentsListScreen(),
-                    ),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 14.0),
-                child: Text(
-                  'Войти',
-                  style: TextStyle(
-                    //color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

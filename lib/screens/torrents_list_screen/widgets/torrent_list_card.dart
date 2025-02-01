@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
-import 'package:qbittorrent_client/repositories/utils.dart';
+import 'package:qbittorrent_client/utils.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/torrent_card_screen.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/line_progress_widget.dart';
 
