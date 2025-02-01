@@ -12,7 +12,9 @@ class AppDelegate: FlutterAppDelegate {
   }
 
   // Обработка открытия файлов
-  override func application(_ application: NSApplication, open urls: [URL]) {
+  override func application(
+  _ application: NSApplication,
+  open urls: [URL]) {
     let filePaths = urls.map { $0.path } // Извлекаем пути к файлам
     let controller = self.mainFlutterWindow?.contentViewController as! FlutterViewController
     let channel = FlutterMethodChannel(name: "file_open_channel", binaryMessenger: controller.engine.binaryMessenger)

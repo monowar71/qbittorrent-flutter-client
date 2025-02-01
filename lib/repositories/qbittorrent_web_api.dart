@@ -53,22 +53,38 @@ class QbittorrentWebApi {
 
     final sidFromStorage = await GetIt.I.get<LocalStorageRepository>().getString('sid');
 
-    if(sidFromStorage != null) {
-      _sid = sidFromStorage;
-      final test = await getTorrentsList();
+    if(sidFromStorage == null) {
+      return false;
+    }
 
-      if(test == null || test.isEmpty)
-      {
-        _sid = null;
-        await GetIt.I.get<LocalStorageRepository>().saveString('sid', "");
-        return false;
-      }
-      else
-      {
-        return true;
-      }
+    final bool test = await checkSession(sidFromStorage);
+
+    if(test == false) {
+      _sid = null;
+      await GetIt.I.get<LocalStorageRepository>().saveString('sid', "");
+
+      return false;
+    }
+    else
+    {
+      return true;
     }
     return false;
+  }
+
+  Future<bool> checkSession(String sid) async {
+    _sid = sid;
+    final test = await getTorrentsList();
+
+    if(test == null || test.isEmpty)
+    {
+      _sid = null;
+      return false;
+    }
+    else
+    {
+      return true;
+    }
   }
 
   /// Logs in and retrieves the session ID (SID).
