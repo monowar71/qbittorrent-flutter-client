@@ -153,7 +153,7 @@ class QbittorrentWebApi {
     }
   }
 
-  /// Retrieves detailed information for a specific torrent.
+  /// Retrieves detailed information for a specific torrents_list_info.
   Future<TorrentInfo> getTorrentData(String hash) async {
     try {
       final response = await dio.post(
@@ -165,7 +165,7 @@ class QbittorrentWebApi {
       final data = response.data.first;
       return TorrentInfo.fromJson(data);
     } catch (e) {
-      print('Failed to fetch torrent data: $e');
+      print('Failed to fetch torrents_list_info data: $e');
       rethrow;
     }
   }
@@ -196,7 +196,7 @@ class QbittorrentWebApi {
   }
 
 
-  /// Retrieves the list of files for a specific torrent.
+  /// Retrieves the list of files for a specific torrents_list_info.
   Future<List<FileInfo>> getTorrentFiles(String hash) async {
     try {
       final response = await dio.post(
@@ -208,7 +208,7 @@ class QbittorrentWebApi {
       final data = response.data as List;
       return data.map((e) => FileInfo.fromJson(e)).toList();
     } catch (e) {
-      print('Failed to fetch torrent files: $e');
+      print('Failed to fetch torrents_list_info files: $e');
       rethrow;
     }
   }
@@ -244,7 +244,7 @@ class QbittorrentWebApi {
     }
   }
 
-  /// Uploads a `.torrent` file to the server.
+  /// Uploads a `.torrents_list_info` file to the server.
   Future<void> uploadTorrentFile(
       AddedTorrentSettings torrentSetting) async {
     try {
@@ -269,10 +269,10 @@ class QbittorrentWebApi {
       if (response.statusCode == 200) {
         print('Torrent file uploaded successfully.');
       } else {
-        throw Exception('Failed to upload torrent file: ${response.statusMessage}');
+        throw Exception('Failed to upload torrents_list_info file: ${response.statusMessage}');
       }
     } catch (e) {
-      print('Error uploading torrent file: $e');
+      print('Error uploading torrents_list_info file: $e');
       rethrow;
     }
   }

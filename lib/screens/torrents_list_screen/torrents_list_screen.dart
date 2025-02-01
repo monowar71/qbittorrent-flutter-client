@@ -1,109 +1,76 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
-import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
-import 'package:qbittorrent_client/models/torrent_info.dart';
-import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/add_torrent_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents_list_info/torrents_list_info_bloc.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/torrent_list_card.dart';
 
 class TorrentsListScreen extends StatefulWidget {
+  const TorrentsListScreen({super.key});
+
   @override
   State<TorrentsListScreen> createState() => _TorrentsListScreenState();
 }
 
 class _TorrentsListScreenState extends State<TorrentsListScreen> {
-  List<TorrentInfo> downloads = [];
-  bool isLoading = true;
-
-  Timer? _refreshTimer;
+  late StreamSubscription _timerSubscription;
 
   @override
   void initState() {
     super.initState();
-    _getTorrentsList();
-    _startAutoRefresh();
 
-    const MethodChannel fileOpenChannel = MethodChannel('file_open_channel');
-    fileOpenChannel.setMethodCallHandler((call) async {
-      if (call.method == 'onFileOpen') {
-        final List<dynamic> files = call.arguments;
-        debugPrint('Opened files: $files');
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => AddTorrentDialog(torrentPath: files.first),
-        );
-        // setState(() {
-        //   print(files.isNotEmpty ? files.first : "No file opened");
-        // });
+    _timerSubscription = Stream.periodic(Duration(seconds: 2)).listen((_) {
+      if (mounted) {
+        context.read<TorrentsListInfoBloc>().add(FetchTorrentsEvent());
       }
     });
-
-
-  }
-
-  void _startAutoRefresh() {
-    _refreshTimer = Timer.periodic(Duration(seconds: 1), (_) {
-      _getTorrentsList();
-    });
-  }
-
-  Future<void> _getTorrentsList() async {
-    try {
-      final torrents = await GetIt.I<QbittorrentWebApi>().getTorrentsList();
-      setState(() {
-        downloads = torrents;
-        downloads.sort((a, b) => b.addedOn!.compareTo(a.addedOn!));
-        isLoading = false;
-      });
-    } catch (e) {
-      print("Ошибка загрузки торрентов: $e");
-      setState(() {
-        isLoading = false;
-      });
-    }
   }
 
   @override
   void dispose() {
-    _cancelAutoRefresh();
+    _timerSubscription.cancel();
     super.dispose();
   }
-
-  void _cancelAutoRefresh() {
-    _refreshTimer?.cancel();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Список загрузок"),
+        title: const Text('Список торрентов'),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : downloads.isEmpty
-          ? const Center(child: Text("Нет активных загрузок"))
-          : ListView.builder(
-        itemCount: downloads.length,
-        itemBuilder: (context, index) {
-          final item = downloads[index];
-          return TorrentListCard(item: item);
-        },
+      body: BlocBuilder<TorrentsListInfoBloc, TorrentsListInfoState>(
+          builder: (context, state) {
+            if(state is TorrentsListInfoLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if(state is TorrentError) {
+              return Center(child: Text('Ошибка загрузки торрентов ${state.error}'));
+            }
+            if(state is TorrentsListInfoLoaded) {
+              return ListView.builder(
+                itemCount: state.torrents.length,
+                itemBuilder: (context, index) {
+                  state.torrents.sort((a, b) => b.addedOn!.compareTo(a.addedOn!));
+                  final item = state.torrents[index];
+                  return TorrentListCard(item: item);
+                },
+              );
+            }
+            return const Center(child: Text('Нет активных торрентов'));
+          }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddTorrentDialog(context),
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
     );
   }
-
-  void _showAddTorrentDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AddTorrentDialog(),
-    );
-  }
 }
+
+
+  // void _showAddTorrentDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) => AddTorrentDialog(),
+  //   );
+  // }
+

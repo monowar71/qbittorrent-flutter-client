@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:qbittorrent_client/models/torrent_info.dart';
+import 'package:qbittorrent_client/utils.dart';
 
 class QBittorrentApi {
   QBittorrentApi({required this.dio});
@@ -7,7 +9,6 @@ class QBittorrentApi {
 
   String? baseUrl;
   String? _sid;
-
 
 
   // Endpoints
@@ -25,6 +26,20 @@ class QBittorrentApi {
     return '$protocol://$address:$port';
   }
 
+  Options _authHeaders() {
+    if (_sid == null) {
+      throw Exception('SID is null. Login is required.');
+    }
+
+    return Options(
+      contentType: Headers.formUrlEncodedContentType,
+      headers: {
+        'Referer': baseUrl,
+        'Cookie': 'SID=$_sid',
+      },
+    );
+  }
+
   Future<void> login({
     required String address,
     required String port,
@@ -32,7 +47,6 @@ class QBittorrentApi {
     required String username,
     required String password,
   }) async {
-
     baseUrl = _buildBaseUrl(address, port, isHTTPS);
 
     final response = await dio.post(
@@ -48,34 +62,45 @@ class QBittorrentApi {
     );
 
     if (response.statusCode == 200) {
-      _sid = response.headers['set-cookie']?.first;
+      //_sid = response.headers['set-cookie']?.first;
+      final cookies = response.headers['set-cookie'];
+      if (cookies != null && cookies.isNotEmpty) {
+        _sid = extractSID(cookies.first);
+      }
+      else {
+        throw Exception('Failed to get sid');
+      }
     } else {
       throw Exception('Failed to login');
     }
   }
 
-  Future<List<Map<String, dynamic>>> getTorrents() async {
+  Future<List<TorrentInfo>> getTorrentsList() async {
     final response = await dio.get(
-      '$baseUrl/api/v2/torrents/info',
-      options: Options(headers: {'Cookie': _sid}),
+      '$baseUrl/$_endpointTorrentsInfo',
+      options: _authHeaders(),
     );
 
     if (response.statusCode == 200) {
-      return List<Map<String, dynamic>>.from(response.data);
+      final data = response.data as List;
+      return data.map((e) => TorrentInfo.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load torrents');
     }
   }
 
-  Future<void> addTorrent(String url) async {
+  Future<TorrentInfo> getTorrentData(String hash) async {
     final response = await dio.post(
-      '$baseUrl/api/v2/torrents/add',
-      data: {'urls': url},
-      options: Options(headers: {'Cookie': _sid}),
+      '$baseUrl/$_endpointTorrentsInfo',
+      data: {'hashes': hash},
+      options: _authHeaders(),
     );
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to add torrent');
+    if (response.statusCode == 200) {
+      final data = response.data.first;
+      return TorrentInfo.fromJson(data);
+    } else {
+      throw Exception('Failed to load torrent data');
     }
   }
 }

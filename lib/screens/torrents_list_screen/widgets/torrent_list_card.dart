@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
-import 'package:qbittorrent_client/screens/torrent_card_screen/torrent_card_screen.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/line_progress_widget.dart';
 
 class TorrentListCard extends StatelessWidget {
@@ -17,8 +14,10 @@ class TorrentListCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-            TorrentCardScreen(torrentInfo: item)));
+        Navigator.pushNamed(
+            context,
+            '/torrent_info',
+            arguments: item);
       },
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -62,7 +61,7 @@ class TorrentListCard extends StatelessWidget {
                           color: Color.fromRGBO(7, 119, 245, 1.0),
                           fontWeight: FontWeight.bold,
                       )),
-                  Text(item.state!),
+                  Text(item.state!.toLocalizedString()),
                 ],
               ),
               SizedBox(height: 5),
@@ -97,10 +96,10 @@ class TorrentListCard extends StatelessWidget {
                     children: [
 
                       IconButton(icon: Icon(Icons.play_arrow), onPressed: (){
-                        GetIt.I.get<QbittorrentWebApi>().startTorrents([item.hash!]);
+                        //GetIt.I.get<QbittorrentWebApi>().startTorrents([item.hash!]);
                       }),
                       IconButton(icon: Icon(Icons.pause), onPressed: (){
-                        GetIt.I.get<QbittorrentWebApi>().stopTorrents([item.hash!]);
+                        //GetIt.I.get<QbittorrentWebApi>().stopTorrents([item.hash!]);
                       }),
                     ],
                   ),

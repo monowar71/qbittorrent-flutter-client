@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
-import 'package:qbittorrent_client/screens/torrents_list_screen/torrents_list_screen.dart';
+//import 'package:qbittorrent_client/screens/torrents_list_screen/torrents_list_screen.dart';
 
 class TorrentActionsButtons extends StatelessWidget {
   const TorrentActionsButtons({
@@ -21,7 +21,7 @@ class TorrentActionsButtons extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                GetIt.I.get<QbittorrentWebApi>().startTorrents([torrentInfo.hash!]);
+                //GetIt.I.get<QbittorrentWebApi>().startTorrents([torrentInfo.hash!]);
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -37,7 +37,7 @@ class TorrentActionsButtons extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                GetIt.I.get<QbittorrentWebApi>().stopTorrents([torrentInfo.hash!]);
+                //GetIt.I.get<QbittorrentWebApi>().stopTorrents([torrentInfo.hash!]);
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -85,8 +85,8 @@ class TorrentActionsButtons extends StatelessWidget {
               onPressed: () {
                 GetIt.I.get<QbittorrentWebApi>().deleteTorrents(hashes: [torrentInfo.hash!], deleteFiles: false);
                 Navigator.of(context).pop();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
-                    TorrentsListScreen()));
+                /*Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+                    TorrentsListScreen()));*/
               },
               child: Text('Только торрент'),
             ),
@@ -94,8 +94,8 @@ class TorrentActionsButtons extends StatelessWidget {
               onPressed: () {
                 GetIt.I.get<QbittorrentWebApi>().deleteTorrents(hashes: [torrentInfo.hash!], deleteFiles: true);
                 Navigator.of(context).pop();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
-                    TorrentsListScreen()));
+                /*Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+                    TorrentsListScreen()));*/
               },
               child: Text('Торрент и файлы'),
             ),

@@ -1,15 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrent_info/torrent_info_bloc.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/base_info_tab.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/files_info_tab/files_info_tab.dart';
 
 class TorrentCardScreen extends StatefulWidget {
-  const TorrentCardScreen({Key? key, required this.torrentInfo}) : super(key: key);
+  TorrentCardScreen({Key? key}) : super(key: key);
 
-  final TorrentInfo torrentInfo;
 
   @override
   State<TorrentCardScreen> createState() => _TorrentCardScreenState();
@@ -18,45 +18,30 @@ class TorrentCardScreen extends StatefulWidget {
 class _TorrentCardScreenState extends State<TorrentCardScreen> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   late TorrentInfo _torrentInfo;
-
-  Timer? _refreshTimer;
+  late StreamSubscription _timerSubscription;
 
   @override
   void initState() {
     super.initState();
-    _torrentInfo = widget.torrentInfo;
-
     _tabController = TabController(length: 2, vsync: this);
-    _startAutoRefresh();
-    _fetchTorrentInfo();
+
+    _timerSubscription = Stream.periodic(Duration(seconds: 2)).listen((_) {
+      if (mounted) {
+        context.read<TorrentInfoBloc>().add(FetchTorrentInfoEvent(hash: _torrentInfo.hash!));
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _refreshTimer?.cancel();
+    _timerSubscription.cancel();
+
     super.dispose();
   }
-
-  void _startAutoRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (_) => _fetchTorrentInfo());
-  }
-
-  Future<void> _fetchTorrentInfo() async {
-    try {
-      final torrent = await GetIt.I<QbittorrentWebApi>().getTorrentData(widget.torrentInfo.hash!);
-      if (mounted) {
-        setState(() {
-          _torrentInfo = torrent;
-        });
-      }
-    } catch (e) {
-      debugPrint("Error fetching torrent info: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    _torrentInfo = ModalRoute.of(context)!.settings.arguments as TorrentInfo;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -71,13 +56,20 @@ class _TorrentCardScreenState extends State<TorrentCardScreen> with SingleTicker
           ],
         ),
       ),
-      body: TabBarView(
+      body: BlocBuilder<TorrentInfoBloc, TorrentInfoState>(
+  builder: (context, state) {
+    if (state is TorrentInfoLoaded) {
+      return TabBarView(
         controller: _tabController,
         children: [
-          BaseInfoTab(torrentInfo: _torrentInfo),
-          FilesInfoTab(torrentInfo: _torrentInfo),
+          BaseInfoTab(torrentInfo: state.torrent),
+          FilesInfoTab(torrentInfo: state.torrent),
         ],
-      ),
+      );
+    }
+    return Center(child: CircularProgressIndicator());
+  },
+),
     );
   }
 }

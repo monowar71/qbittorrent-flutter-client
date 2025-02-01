@@ -24,7 +24,7 @@ class BaseInfoTab extends StatelessWidget {
           children: [
             const SectionHeader(title: 'Основная информация'),
             InfoRow(label: 'Хеш', value: torrentInfo.hash!),
-            InfoRow(label: 'Статус', value: torrentInfo.state!),
+            InfoRow(label: 'Статус', value: torrentInfo.state!.toLocalizedString()),
             InfoRow(label: 'Имя', value: torrentInfo.name!),
             InfoRow(label: 'Тег', value: torrentInfo.tags!),
             InfoRow(label: 'Категория', value: torrentInfo.category!),

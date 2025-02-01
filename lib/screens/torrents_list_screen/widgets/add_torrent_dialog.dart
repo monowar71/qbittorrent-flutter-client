@@ -84,7 +84,7 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
           child: const Text('Отмена'),
         ),
         ElevatedButton(
-          onPressed: _addTorrent,
+          onPressed: (){},// _addTorrent,
           child: const Text('Добавить'),
         ),
       ],
@@ -96,14 +96,14 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
       final result = await FilePicker.platform.pickFiles();
       if (result != null && result.files.single.path != null) {
         final filePath = result.files.single.path!;
-        if (filePath.endsWith('.torrent')) {
+        if (filePath.endsWith('.torrents_list_info')) {
           setState(() {
             addedTorrentSettings = AddedTorrentSettings(filePath: filePath);
             //selectedFile = filePath;
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Можно выбрать только файлы с расширением .torrent')),
+            const SnackBar(content: Text('Можно выбрать только файлы с расширением .torrents_list_info')),
           );
         }
       }
@@ -118,7 +118,7 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
     });
   }
 
-  Future<void> _addTorrent() async {
+  /*Future<void> _addTorrent() async {
     final qbApi = GetIt.I<QbittorrentWebApi>();
     try {
       if (addedTorrentSettings != null) {
@@ -143,5 +143,5 @@ class _AddTorrentDialogState extends State<AddTorrentDialog> {
         const SnackBar(content: Text('Ошибка добавления торрента')),
       );
     }
-  }
+  }*/
 }
