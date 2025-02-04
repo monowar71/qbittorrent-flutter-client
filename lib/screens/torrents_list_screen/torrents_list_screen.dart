@@ -18,7 +18,6 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
   @override
   void initState() {
     super.initState();
-
     _timerSubscription = Stream.periodic(Duration(seconds: 2)).listen((_) {
       if (mounted) {
         context.read<TorrentsListInfoBloc>().add(FetchTorrentsEvent());
@@ -42,7 +41,7 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
             if(state is TorrentsListInfoLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            if(state is TorrentError) {
+            if(state is TorrentListInfoError) {
               return Center(child: Text('Ошибка загрузки торрентов ${state.error}'));
             }
             if(state is TorrentsListInfoLoaded) {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
 
@@ -62,7 +63,6 @@ class QBittorrentApi {
     );
 
     if (response.statusCode == 200) {
-      //_sid = response.headers['set-cookie']?.first;
       final cookies = response.headers['set-cookie'];
       if (cookies != null && cookies.isNotEmpty) {
         _sid = extractSID(cookies.first);
@@ -101,6 +101,60 @@ class QBittorrentApi {
       return TorrentInfo.fromJson(data);
     } else {
       throw Exception('Failed to load torrent data');
+    }
+  }
+
+  Future<List<FileInfo>> getTorrentFiles(String hash) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointTorrentFiles',
+      data: {'hash': hash},
+      options: _authHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      final data = response.data as List;
+      return data.map((e) => FileInfo.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load torrent files');
+    }
+  }
+
+  Future<void> resumeTorrents(String hash) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointTorrentsResume',
+      data: {'hashes': hash},
+      options: _authHeaders(),
+    );
+
+    if (response.statusCode == 200) {}
+    else {
+      throw Exception('Failed to resume torrents');
+    }
+  }
+  Future<void> pauseTorrents(String hash) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointTorrentsPause',
+      data: {'hashes': hash},
+      options: _authHeaders(),
+    );
+
+      if (response.statusCode == 200) {}
+      else {
+        throw Exception('Failed to pause torrents');
+    }
+  }
+  Future<void> deleteTorrents(String hash, bool deleteFiles) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointTorrentDelete',
+      data: {
+        'hashes': hash,
+        'deleteFiles': deleteFiles.toString()
+        },
+      options: _authHeaders(),
+    );
+    if (response.statusCode == 200) {}
+    else {
+      throw Exception('Failed to delete torrents');
     }
   }
 }

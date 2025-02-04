@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_info/torrent_info_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents_list_info/torrents_list_info_bloc.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
@@ -28,12 +29,15 @@ class QbittorrentClientApp extends StatelessWidget {
               api: GetIt.I<QBittorrentApi>()),
           child: TorrentsListScreen(),
         ),
-        '/torrent_info': (context) => BlocProvider(
-          create: (context) => TorrentInfoBloc(
-            api: GetIt.I<QBittorrentApi>(),
-        ),
-          child: TorrentCardScreen(),
-         ),
+        '/torrent_info': (context) => MultiBlocProvider(providers: [
+          BlocProvider(
+              create: (context) => TorrentInfoBloc(
+                  api: GetIt.I<QBittorrentApi>())),
+          BlocProvider(
+              create: (context) => TorrentFileInfoBloc(
+                  api: GetIt.I<QBittorrentApi>()))
+        ],
+          child: TorrentCardScreen(),),
       },
     );
   }

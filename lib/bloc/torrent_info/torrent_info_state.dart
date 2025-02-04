@@ -10,13 +10,15 @@ class TorrentInfoInitial extends TorrentInfoState {}
 class TorrentInfoLoading extends TorrentInfoState {}
 
 class TorrentInfoLoaded extends TorrentInfoState {
-  final TorrentInfo torrent;
+  final TorrentInfo torrentInfo;
 
-  TorrentInfoLoaded({required this.torrent});
+  TorrentInfoLoaded({required this.torrentInfo});
 
   @override
-  List<Object?> get props => [torrent];
+  List<Object?> get props => [torrentInfo];
 }
+
+class TorrentInfoDeleted extends TorrentInfoState {}
 
 class TorrentInfoError extends TorrentInfoState {
   final String error;

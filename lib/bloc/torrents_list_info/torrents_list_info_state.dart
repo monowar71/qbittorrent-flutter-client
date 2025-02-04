@@ -18,10 +18,10 @@ class TorrentsListInfoLoaded extends TorrentsListInfoState {
   List<Object?> get props => [torrents];
 }
 
-class TorrentError extends TorrentsListInfoState {
+class TorrentListInfoError extends TorrentsListInfoState {
   final String error;
 
-  TorrentError({required this.error});
+  TorrentListInfoError({required this.error});
 
   @override
   List<Object?> get props => [error];

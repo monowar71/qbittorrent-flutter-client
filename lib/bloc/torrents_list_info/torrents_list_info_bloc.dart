@@ -22,7 +22,7 @@ class TorrentsListInfoBloc extends Bloc<TorrentsListInfoEvent, TorrentsListInfoS
       final torrents = await api.getTorrentsList();
       emit(TorrentsListInfoLoaded(torrents: torrents));
     } catch (e) {
-      emit(TorrentError(error: e.toString()));
+      emit(TorrentListInfoError(error: e.toString()));
     }
   }
 }
