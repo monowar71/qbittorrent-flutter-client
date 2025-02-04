@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qbittorrent_client/bloc/torrent_info/torrent_info_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 
 class TorrentActionsButtons extends StatelessWidget {
@@ -20,8 +20,8 @@ class TorrentActionsButtons extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                context.read<TorrentInfoBloc>()
-                    .add(ResumeTorrentInfoEvent(hash: torrentInfo.hash!));
+                context.read<TorrentsBloc>()
+                    .add(ResumeTorrentEvent(hash: torrentInfo.hash!));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -37,8 +37,8 @@ class TorrentActionsButtons extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                context.read<TorrentInfoBloc>()
-                    .add(PauseTorrentInfoEvent(hash: torrentInfo.hash!));
+                context.read<TorrentsBloc>()
+                    .add(PauseTorrentEvent(hash: torrentInfo.hash!));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -84,8 +84,8 @@ class TorrentActionsButtons extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                context.read<TorrentInfoBloc>()
-                    .add(DeleteTorrentInfoEvent(
+                context.read<TorrentsBloc>()
+                    .add(DeleteTorrentEvent(
                     hash: torrentInfo.hash!,
                     deleteFiles: false));
               },
@@ -93,8 +93,8 @@ class TorrentActionsButtons extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.read<TorrentInfoBloc>()
-                    .add(DeleteTorrentInfoEvent(
+                context.read<TorrentsBloc>()
+                    .add(DeleteTorrentEvent(
                     hash: torrentInfo.hash!,
                     deleteFiles: true));
               },

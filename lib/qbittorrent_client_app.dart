@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
-import 'package:qbittorrent_client/bloc/torrent_info/torrent_info_bloc.dart';
-import 'package:qbittorrent_client/bloc/torrents_list_info/torrents_list_info_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 import 'package:qbittorrent_client/screens/auth_screen/auth_screen.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/torrent_card_screen.dart';
@@ -25,13 +24,13 @@ class QbittorrentClientApp extends StatelessWidget {
           child: AuthScreenNew(),
         ),
         '/torrents': (context) => BlocProvider(
-          create: (context) => TorrentsListInfoBloc(
+          create: (context) => TorrentsBloc(
               api: GetIt.I<QBittorrentApi>()),
           child: TorrentsListScreen(),
         ),
         '/torrent_info': (context) => MultiBlocProvider(providers: [
           BlocProvider(
-              create: (context) => TorrentInfoBloc(
+              create: (context) => TorrentsBloc(
                   api: GetIt.I<QBittorrentApi>())),
           BlocProvider(
               create: (context) => TorrentFileInfoBloc(

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qbittorrent_client/bloc/torrents_list_info/torrents_list_info_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/torrent_list_card.dart';
 
 class TorrentsListScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
     super.initState();
     _timerSubscription = Stream.periodic(Duration(seconds: 2)).listen((_) {
       if (mounted) {
-        context.read<TorrentsListInfoBloc>().add(FetchTorrentsEvent());
+        context.read<TorrentsBloc>().add(FetchTorrentsListEvent());
       }
     });
   }
@@ -36,12 +36,12 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
       appBar: AppBar(
         title: const Text('Список торрентов'),
       ),
-      body: BlocBuilder<TorrentsListInfoBloc, TorrentsListInfoState>(
+      body: BlocBuilder<TorrentsBloc, TorrentsState>(
           builder: (context, state) {
-            if(state is TorrentsListInfoLoading) {
+            if(state is TorrentInfoLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            if(state is TorrentListInfoError) {
+            if(state is TorrentsError) {
               return Center(child: Text('Ошибка загрузки торрентов ${state.error}'));
             }
             if(state is TorrentsListInfoLoaded) {

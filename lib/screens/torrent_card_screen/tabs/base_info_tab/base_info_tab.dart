@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qbittorrent_client/bloc/torrent_info/torrent_info_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/widgets/info_row.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/widgets/section_header.dart';
@@ -32,14 +32,14 @@ class _BaseInfoTabState extends State<BaseInfoTab> {
 
     _timerSubscription = Stream.periodic(const Duration(seconds: 2)).listen((_) {
       if (mounted) {
-        context.read<TorrentInfoBloc>().add(FetchTorrentInfoEvent(hash: widget.torrentInfo.hash!));
+        context.read<TorrentsBloc>().add(FetchTorrentInfoEvent(hash: widget.torrentInfo.hash!));
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TorrentInfoBloc, TorrentInfoState>(
+    return BlocConsumer<TorrentsBloc, TorrentsState>(
       listener: (context, state) {
         if (state is TorrentInfoDeleted) {
           Navigator.pushReplacementNamed(context, '/torrents');
