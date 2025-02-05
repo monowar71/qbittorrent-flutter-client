@@ -7,14 +7,14 @@ import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 import 'package:qbittorrent_client/screens/auth_screen/widgets/auth_labled_textfield.dart';
 import 'package:qbittorrent_client/screens/auth_screen/widgets/labeled_switch.dart';
 
-class AuthScreenNew extends StatefulWidget {
-  AuthScreenNew({super.key});
+class AuthScreen extends StatefulWidget {
+  AuthScreen({super.key});
 
   @override
-  State<AuthScreenNew> createState() => _AuthScreenNewState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenNewState extends State<AuthScreenNew> {
+class _AuthScreenState extends State<AuthScreen> {
   final localStorageRepository = GetIt.I<LocalStorageRepository>();
 
   final addressEditingController = TextEditingController();

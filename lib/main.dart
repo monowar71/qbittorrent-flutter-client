@@ -17,6 +17,7 @@ Future<void> main() async {
 
   GetIt.I.registerLazySingleton(() =>
       LocalStorageRepository(sharedPreferences: sharedPreferences));
+
   GetIt.I.registerSingleton<QBittorrentApi>(QBittorrentApi(dio: GetIt.I.get<Dio>(),));
 
   runApp(QbittorrentClientApp());

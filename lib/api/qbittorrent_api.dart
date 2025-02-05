@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:qbittorrent_client/models/added_torrent_settings.dart';
 import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
@@ -152,6 +153,28 @@ class QBittorrentApi {
         },
       options: _authHeaders(),
     );
+    if (response.statusCode == 200) {}
+    else {
+      throw Exception('Failed to delete torrents');
+    }
+  }
+  Future<void> uploadTorrentFile(AddedTorrentSettings torrentSetting) async {
+    final file = await MultipartFile.fromFile(torrentSetting.filePath, filename: torrentSetting.filePath.split('/').last);
+    final formData = FormData.fromMap({
+      'torrents': file,
+      'savepath': torrentSetting.savePath ?? '',
+      //'category': category ?? '',
+      'skip_checking': torrentSetting.skipChecking ?? '',
+      //'paused': paused ?? '',
+      'paused': torrentSetting.paused.toString(),
+      'rename': torrentSetting.rename ?? '',
+    });
+    final response = await dio.post(
+        '$baseUrl/$_endpointTorrentAdd',
+        data: formData,
+        options: _authHeaders()
+    );
+
     if (response.statusCode == 200) {}
     else {
       throw Exception('Failed to delete torrents');

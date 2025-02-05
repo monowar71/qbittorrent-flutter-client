@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
+import 'package:qbittorrent_client/screens/add_torrent_screen/add_torrent_screen.dart';
 import 'package:qbittorrent_client/screens/auth_screen/auth_screen.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/torrent_card_screen.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/torrents_list_screen.dart';
@@ -21,7 +23,7 @@ class QbittorrentClientApp extends StatelessWidget {
           create: (context) => AuthBloc(
             api: GetIt.I<QBittorrentApi>(),
             localStorageRepository: GetIt.I<LocalStorageRepository>()),
-          child: AuthScreenNew(),
+          child: AuthScreen(),
         ),
         '/torrents': (context) => BlocProvider(
           create: (context) => TorrentsBloc(
@@ -37,6 +39,11 @@ class QbittorrentClientApp extends StatelessWidget {
                   api: GetIt.I<QBittorrentApi>()))
         ],
           child: TorrentCardScreen(),),
+        '/add_torrent': (context) => BlocProvider(
+          create: (context) => AddTorrentBloc(
+              api: GetIt.I<QBittorrentApi>()),
+          child: AddTorrentScreen(),
+        ),
       },
     );
   }

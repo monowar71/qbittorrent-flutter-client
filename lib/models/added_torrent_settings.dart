@@ -1,13 +1,11 @@
 class AddedTorrentSettings{
   final String filePath;
-  final String? savePath;
+  String? savePath;
   bool paused = false;
   bool skipChecking = false;
-  final String? rename;
+  String? rename;
 
   AddedTorrentSettings({
     required this.filePath,
-    this.savePath,
-    this.rename,
   });
 }

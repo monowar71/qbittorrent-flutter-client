@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
+import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/add_torrent_dialog.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/torrent_list_card.dart';
 
 class TorrentsListScreen extends StatefulWidget {
@@ -58,7 +59,7 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {_showAddTorrentDialog(context);},
         child: const Icon(Icons.add),
       ),
     );
@@ -66,10 +67,10 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
 }
 
 
-  // void _showAddTorrentDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) => AddTorrentDialog(),
-  //   );
-  // }
+  void _showAddTorrentDialog(BuildContext context) {
+    Navigator.pushNamed(
+        context,
+        '/add_torrent');
+
+  }
 
