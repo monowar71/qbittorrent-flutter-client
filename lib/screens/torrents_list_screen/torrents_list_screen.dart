@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
-import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/add_torrent_dialog.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/torrent_list_card.dart';
 
 class TorrentsListScreen extends StatefulWidget {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
 import 'package:qbittorrent_client/screens/torrents_list_screen/widgets/line_progress_widget.dart';
@@ -96,11 +98,11 @@ class TorrentListCard extends StatelessWidget {
                     children: [
 
                       IconButton(icon: Icon(Icons.play_arrow), onPressed: (){
-                        //GetIt.I.get<QbittorrentWebApi>().startTorrents([item.hash!]);
-                      }),
+                        context.read<TorrentsBloc>()
+                            .add(ResumeTorrentEvent(hash: item.hash!));                      }),
                       IconButton(icon: Icon(Icons.pause), onPressed: (){
-                        //GetIt.I.get<QbittorrentWebApi>().stopTorrents([item.hash!]);
-                      }),
+                        context.read<TorrentsBloc>()
+                            .add(PauseTorrentEvent(hash: item.hash!));                      }),
                     ],
                   ),
                 ],
