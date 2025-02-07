@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 
 class SeedPeersInfo extends StatelessWidget {
@@ -14,8 +15,8 @@ class SeedPeersInfo extends StatelessWidget {
     return Row(
         mainAxisAlignment:MainAxisAlignment.spaceBetween,
         children: [
-          Text('Seeds: ${torrentInfo.numSeeds}'),
-          Text('Peers: ${torrentInfo.numLeechs}'),
+          Text('${t.torrent_card_screen.base_info_tab.seed_peers_info.seeds_label}  ${torrentInfo.numSeeds}'),
+          Text('${t.torrent_card_screen.base_info_tab.seed_peers_info.peers_label}  ${torrentInfo.numLeechs}'),
         ]
     );
   }

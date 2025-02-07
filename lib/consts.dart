@@ -4,4 +4,6 @@ class Consts {
   static const String keyHttps = 'https';
   static const String keyUsername = 'username';
   static const String keyPassword = 'password';
+  static const String keyEnterAutomatically = 'enterAutomatically';
+  static const String keySaveCredentials = 'saveCredentials';
 }

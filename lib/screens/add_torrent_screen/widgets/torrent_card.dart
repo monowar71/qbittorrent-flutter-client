@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/added_torrent_settings.dart';
 import 'package:qbittorrent_client/screens/auth_screen/widgets/labeled_switch.dart';
 
@@ -27,7 +28,7 @@ class TorrentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LabeledSwitch(
-                  label: "Пауза при старте",
+                  label: t.add_torrent_screen.torrent_card.pause_at_start_label,
                   initialValue: settings.paused ?? false,
                   onChanged: (e) => settings.paused = e,
                 ),
@@ -40,8 +41,8 @@ class TorrentCard extends StatelessWidget {
               ],
             ),
             LabeledSwitch(
-              label: "Пропустить проверку",
-              initialValue: settings.skipChecking ?? false,
+              label: t.add_torrent_screen.torrent_card.skip_checking_label,
+              initialValue: settings.skipChecking,
               onChanged: (e) => settings.skipChecking = e,
             ),
           ],

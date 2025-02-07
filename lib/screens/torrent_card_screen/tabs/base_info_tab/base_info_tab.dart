@@ -10,6 +10,8 @@ import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_ta
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/widgets/file_size_info.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/widgets/torrent_actions_buttons.dart';
 import 'widgets/seed_peers_info.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
+
 
 class BaseInfoTab extends StatefulWidget {
   const BaseInfoTab({super.key, required this.torrentInfo});
@@ -58,19 +60,19 @@ class _BaseInfoTabState extends State<BaseInfoTab> {
               children: [
                 FileSizeInfo(torrentInfo: _currentTorrentInfo),
                 const SizedBox(height: 20),
-                const SectionHeader(title: 'Основная информация'),
-                InfoRow(label: 'Хеш', value: _currentTorrentInfo.hash!),
-                InfoRow(label: 'Статус', value: _currentTorrentInfo.state.toString()),
-                InfoRow(label: 'Имя', value: _currentTorrentInfo.name!),
-                InfoRow(label: 'Тег', value: _currentTorrentInfo.tags!),
-                InfoRow(label: 'Категория', value: _currentTorrentInfo.category!),
-                InfoRow(label: 'Магнет-ссылка', value: _currentTorrentInfo.magnetUri!),
-                InfoRow(label: 'Адрес сохранения', value: _currentTorrentInfo.savePath!),
+                SectionHeader(title: t.torrent_card_screen.base_info_tab.main_info_label),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.hash_label, value: _currentTorrentInfo.hash!),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.status_label, value: _currentTorrentInfo.state.toString()),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.name_label, value: _currentTorrentInfo.name!),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.tags_label, value: _currentTorrentInfo.tags!),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.category_label, value: _currentTorrentInfo.category!),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.magnet_uri_label, value: _currentTorrentInfo.magnetUri!),
+                InfoRow(label: t.torrent_card_screen.base_info_tab.save_path_label, value: _currentTorrentInfo.savePath!),
                 const SizedBox(height: 20),
-                const SectionHeader(title: 'Сиды/пиры'),
+                SectionHeader(title: t.torrent_card_screen.base_info_tab.seeds_peers_section_title),
                 SeedPeersInfo(torrentInfo: _currentTorrentInfo),
                 const SizedBox(height: 20),
-                const SectionHeader(title: 'Скорость'),
+                SectionHeader(title: t.torrent_card_screen.base_info_tab.speed_section_title),
                 SpeedInfo(torrentInfo: _currentTorrentInfo),
                 const SizedBox(height: 20),
                 TorrentActionsButtons(torrentInfo: _currentTorrentInfo),

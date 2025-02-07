@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/qbittorrent_client_app.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,6 @@ Future<void> main() async {
 
   GetIt.I.registerSingleton<QBittorrentApi>(QBittorrentApi(dio: GetIt.I.get<Dio>(),));
 
-  runApp(QbittorrentClientApp());
+  runApp(TranslationProvider(child: QbittorrentClientApp()));
 }
 

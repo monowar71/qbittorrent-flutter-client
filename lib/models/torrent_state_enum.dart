@@ -1,3 +1,5 @@
+import 'package:qbittorrent_client/i18n/strings.g.dart';
+
 enum TorrentState {
   error,
   missingFiles,
@@ -62,26 +64,26 @@ enum TorrentState {
     TorrentState.unknown: 'unknown',
   };
 
-  static const Map<TorrentState, String> _localizedNames = {
-    TorrentState.error: 'Ошибка',
-    TorrentState.missingFiles: 'Отсутствуют файлы',
-    TorrentState.uploading: 'Раздача',
-    TorrentState.pausedUP: 'Раздача приостановлена',
-    TorrentState.queuedUP: 'В очереди на раздачу',
-    TorrentState.stalledUP: 'Раздача остановлена',
-    TorrentState.stoppedUP: 'Раздача остановлена',
-    TorrentState.checkingUP: 'Проверка раздачи',
-    TorrentState.forcedUP: 'Принудительная раздача',
-    TorrentState.allocating: 'Выделение места',
-    TorrentState.downloading: 'Загрузка',
-    TorrentState.metaDL: 'Загрузка метаданных',
-    TorrentState.stoppedDL: 'Загрузка приостановлена',
-    TorrentState.queuedDL: 'В очереди на загрузку',
-    TorrentState.stalledDL: 'Загрузка остановлена',
-    TorrentState.checkingDL: 'Проверка загрузки',
-    TorrentState.forcedDL: 'Принудительная загрузка',
-    TorrentState.checkingResumeData: 'Проверка данных',
-    TorrentState.moving: 'Перемещение файлов',
-    TorrentState.unknown: 'Неизвестный статус',
+  static Map<TorrentState, String> _localizedNames = {
+    TorrentState.error: t.models.torrent_state.error,
+    TorrentState.missingFiles: t.models.torrent_state.missing_files,
+    TorrentState.uploading: t.models.torrent_state.uploading,
+    TorrentState.pausedUP: t.models.torrent_state.paused_up,
+    TorrentState.queuedUP: t.models.torrent_state.queued_up,
+    TorrentState.stalledUP: t.models.torrent_state.stalled_up,
+    TorrentState.stoppedUP: t.models.torrent_state.stopped_up,
+    TorrentState.checkingUP: t.models.torrent_state.checking_up,
+    TorrentState.forcedUP: t.models.torrent_state.forced_up,
+    TorrentState.allocating: t.models.torrent_state.allocating,
+    TorrentState.downloading: t.models.torrent_state.downloading,
+    TorrentState.metaDL: t.models.torrent_state.meta_dl,
+    TorrentState.stoppedDL: t.models.torrent_state.stopped_dl,
+    TorrentState.queuedDL: t.models.torrent_state.queued_dl,
+    TorrentState.stalledDL: t.models.torrent_state.stalled_dl,
+    TorrentState.checkingDL: t.models.torrent_state.checking_dl,
+    TorrentState.forcedDL: t.models.torrent_state.forced_dl,
+    TorrentState.checkingResumeData: t.models.torrent_state.checking_resume_data,
+    TorrentState.moving: t.models.torrent_state.moving,
+    TorrentState.unknown: t.models.torrent_state.unknown,
   };
 }

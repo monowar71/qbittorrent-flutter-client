@@ -1,0 +1,119 @@
+{
+  "auth_screen": {
+    "title": "Qbittorrent Client",
+    "server_ip_or_dns": "Server IP или DDNS",
+    "port_number": "Номер порта",
+    "https": "HTTPS",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "save_credentials": "Сохранить?",
+    "enter_automatically": "Входить автоматически?",
+    "enter": "Войти"
+  },
+  "torrent_list_screen": {
+    "title": "Список торрентов",
+    "loading_torrents": "Загрузка торрентов...",
+    "torrents_error": "Ошибка загрузки торрентов {error}",
+    "no_active_torrents": "Нет активных торрентов"
+  },
+  "torrent_card_screen": {
+    "title": "Детали торрента",
+    "base_info_tab_label": "Основные",
+    "files_info_tab_label": "Файлы",
+    "base_info_tab": {
+      "main_info_label": "Основная информация",
+      "hash_label": "Хеш",
+      "status_label": "Статус",
+      "name_label": "Имя",
+      "tags_label": "Тег",
+      "category_label": "Категория",
+      "magnet_uri_label": "Магнет-ссылка",
+      "save_path_label": "Адрес сохранения",
+      "seeds_peers_section_title": "Сиды/пиры",
+      "speed_section_title": "Скорость",
+      "actions_section_title": "Действия",
+
+      "torrent_actions_buttons": {
+        "resume_button": "Запустить",
+        "pause_button": "Остановить",
+        "delete_button": "Удалить",
+        "delete_confirmation_title": "Удаление торрента",
+        "delete_confirmation_message": "Как вы хотите удалить?",
+        "delete_only_torrent": "Только торрент",
+        "delete_torrent_and_files": "Торрент и файлы",
+        "cancel_button": "Отмена"
+      },
+      "file_size_info": {
+        "total_size_label": "Общий размер",
+        "ratio_label": "Соотношение",
+        "completed_size_label": "Уже скачанно",
+        "remaining_size_label": "Осталось скачать"
+      },
+      "seed_peers_info": {
+        "seeds_label": "Seeds:",
+        "peers_label": "Peers:"
+      }
+    },
+    "files_info_tab": {
+      "file_card": {
+        "size_label": "Размер",
+        "priority_label": "Приоритет",
+        "progress_label": "Прогресс",
+        "seeding_label": "Сидируется",
+        "available_label": "Доступно",
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "file_settings_dialog": {
+        "title": "Настройки файла",
+        "name_label": "Название файла",
+        "priority_label": "Приоритет",
+        "unknown": "Неизвестно",
+        "cancel_button": "Отмена",
+        "confirm_button": "Подтвердить"
+      }
+    }
+  },
+  "add_torrent_screen": {
+    "title": "Добавить торрент",
+    "add_all_button": "Добавить все",
+
+    "file_picker_section": {
+      "add_files_button_label": "Добавить файлы"
+    },
+    "torrent_card": {
+      "pause_at_start_label": "Пауза при старте",
+      "skip_checking_label": "Пропустить проверку"
+    }
+  },
+  "models": {
+    "torrent_state": {
+      "error": "Ошибка",
+      "missing_files": "Отсутствуют файлы",
+      "uploading": "Раздача",
+      "paused_up": "Раздача приостановлена",
+      "queued_up": "В очереди на раздачу",
+      "stalled_up": "Раздача остановлена",
+      "stopped_up": "Раздача остановлена",
+      "checking_up": "Проверка раздачи",
+      "forced_up": "Принудительная раздача",
+      "allocating": "Выделение места",
+      "downloading": "Загрузка",
+      "meta_dl": "Загрузка метаданных",
+      "stopped_dl": "Загрузка приостановлена",
+      "queued_dl": "В очереди на загрузку",
+      "stalled_dl": "Загрузка остановлена",
+      "checking_dl": "Проверка загрузки",
+      "forced_dl": "Принудительная загрузка",
+      "checking_resume_data": "Проверка данных",
+      "moving": "Перемещение файлов",
+      "unknown": "Неизвестный статус"
+    },
+    "file_priority": {
+      "dont_download": "Не загружать",
+      "normal": "Нормальный",
+      "high": "Высокий",
+      "maximal": "Максимальный"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 
 class TorrentActionsButtons extends StatelessWidget {
@@ -31,7 +32,7 @@ class TorrentActionsButtons extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.play_arrow),
-                  Text('Запустить'),
+                  Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.resume_button),
                 ],
               ),
             ),
@@ -48,7 +49,7 @@ class TorrentActionsButtons extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.pause),
-                  Text('Остановить'),
+                  Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.pause_button),
                 ],
               ),
             ),
@@ -66,7 +67,7 @@ class TorrentActionsButtons extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.delete, color: Colors.white),
-              Text('Удалить', style: TextStyle(color: Colors.white)),
+              Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.delete_button, style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
@@ -79,8 +80,8 @@ class TorrentActionsButtons extends StatelessWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text('Удаление торрента'),
-          content: Text('Как вы хотите удалить?'),
+          title: Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.delete_confirmation_title),
+          content: Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.delete_confirmation_message),
           actions: [
             TextButton(
               onPressed: () {
@@ -89,7 +90,7 @@ class TorrentActionsButtons extends StatelessWidget {
                     hash: torrentInfo.hash!,
                     deleteFiles: false));
               },
-              child: Text('Только торрент'),
+              child: Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.delete_only_torrent),
             ),
             TextButton(
               onPressed: () {
@@ -98,13 +99,13 @@ class TorrentActionsButtons extends StatelessWidget {
                     hash: torrentInfo.hash!,
                     deleteFiles: true));
               },
-              child: Text('Торрент и файлы'),
+              child: Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.delete_torrent_and_files),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
               },
-              child: Text('Отмена'),
+              child: Text(t.torrent_card_screen.base_info_tab.torrent_actions_buttons.cancel_button),
             ),
           ],
         );

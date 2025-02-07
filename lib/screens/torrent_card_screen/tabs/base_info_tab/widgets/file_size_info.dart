@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
 
@@ -20,11 +21,11 @@ class FileSizeInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Общий размер: ${formatBytes(torrentInfo.totalSize!)}',
+              '${t.torrent_card_screen.base_info_tab.file_size_info.total_size_label}: ${formatBytes(torrentInfo.totalSize!)}',
               style: textStyle,
             ),
             Text(
-              'Соотношение: ${torrentInfo.ratio!.toStringAsFixed(1)}',
+              '${t.torrent_card_screen.base_info_tab.file_size_info.ratio_label}: ${torrentInfo.ratio!.toStringAsFixed(1)}',
               style: textStyle,
             ),
           ],
@@ -60,11 +61,11 @@ class FileSizeInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Уже скачанно: ${formatBytes(torrentInfo.completed)}',
+              '${t.torrent_card_screen.base_info_tab.file_size_info.completed_size_label}: ${formatBytes(torrentInfo.completed)}',
               style: greenTextStyle,
             ),
             Text(
-              'Осталось скачать: ${formatBytes(torrentInfo.amountLeft!)}',
+              '${t.torrent_card_screen.base_info_tab.file_size_info.remaining_size_label}: ${formatBytes(torrentInfo.amountLeft!)}',
               style: redTextStyle,
             ),
           ],

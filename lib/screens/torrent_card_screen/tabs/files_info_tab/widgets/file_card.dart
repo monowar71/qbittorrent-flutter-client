@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
@@ -36,11 +37,11 @@ class FileCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Размер: ${formatBytes(file.size)}',
+                    '${t.torrent_card_screen.files_info_tab.file_card.size_label}: ${formatBytes(file.size)}',
                     style: const TextStyle(fontSize: 14),
                   ),
                   Text(
-                    'Приоритет: ${file.priority}',
+                    '${t.torrent_card_screen.files_info_tab.file_card.priority_label}: ${file.priority}',
                     style: const TextStyle(fontSize: 14),
                   ),
                 ],
@@ -50,14 +51,17 @@ class FileCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Прогресс: ${(file.progress * 100).toStringAsFixed(1)}%',
+                    '${t.torrent_card_screen.files_info_tab.file_card.progress_label}: ${(file.progress * 100).toStringAsFixed(1)}%',
                     style: TextStyle(
                         color: file.progress >= 1 ? Colors.green : Colors
                             .orange,
                         fontSize: 14),
                   ),
                   Text(
-                    'Сидируется: ${file.isSeed == true ? "Да" : "Нет"}',
+                    '${t.torrent_card_screen.files_info_tab.file_card.seeding_label}: '
+                        '${file.isSeed == true ?
+                    t.torrent_card_screen.files_info_tab.file_card.yes :
+                    t.torrent_card_screen.files_info_tab.file_card.no}',
                     style: const TextStyle(fontSize: 14),
                   ),
 
@@ -75,7 +79,7 @@ class FileCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Доступно: ${(file.availability * 100).toStringAsFixed(1)}%',
+                '${t.torrent_card_screen.files_info_tab.file_card.available_label}: ${(file.availability * 100).toStringAsFixed(1)}%',
                 style: const TextStyle(fontSize: 14),
               ),
             ],

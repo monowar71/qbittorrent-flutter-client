@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/base_info_tab/base_info_tab.dart';
 import 'package:qbittorrent_client/screens/torrent_card_screen/tabs/files_info_tab/files_info_tab.dart';
@@ -31,15 +32,15 @@ class _TorrentCardScreenState extends State<TorrentCardScreen> with SingleTicker
     _torrentInfo = ModalRoute.of(context)!.settings.arguments as TorrentInfo;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Детали торрента',
+        title: Text(
+          t.torrent_card_screen.title,
           style: TextStyle(fontSize: 20),
         ),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Основные'),
-            Tab(text: 'Файлы'),
+          tabs: [
+            Tab(text: t.torrent_card_screen.base_info_tab_label),
+            Tab(text: t.torrent_card_screen.files_info_tab_label),
           ],
         ),
       ),

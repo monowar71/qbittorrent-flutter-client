@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/bloc/auth/auth_bloc.dart';
 import 'package:qbittorrent_client/consts.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 import 'package:qbittorrent_client/screens/auth_screen/widgets/auth_labled_textfield.dart';
 import 'package:qbittorrent_client/screens/auth_screen/widgets/labeled_switch.dart';
@@ -96,8 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         size: 100,
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        'Qbittorrent Client',
+                      Text(t.auth_screen.title,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 const Spacer(),
                 AuthLabeledTextfield(
-                  labelText: 'Server IP или DDNS',
+                  labelText: t.auth_screen.server_ip_or_dns,
                   controller: addressEditingController,
                 ),
                 const SizedBox(height: 12),
@@ -116,13 +116,13 @@ class _AuthScreenState extends State<AuthScreen> {
                   children: [
                     Expanded(
                       child: AuthLabeledTextfield(
-                        labelText: 'Номер порта',
+                        labelText: t.auth_screen.port_number,
                         controller: portEditingController,
                       ),
                     ),
                     const SizedBox(width: 8),
                     LabeledSwitch(
-                      label: 'HTTPS',
+                      label: t.auth_screen.https,
                       initialValue: https,
                       onChanged: (value) {
                         https = value;
@@ -132,12 +132,12 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 const SizedBox(height: 12),
                 AuthLabeledTextfield(
-                  labelText: 'Имя пользователя',
+                  labelText: t.auth_screen.username,
                   controller: usernameEditingController,
                 ),
                 const SizedBox(height: 12),
                 AuthLabeledTextfield(
-                  labelText: 'Пароль',
+                  labelText: t.auth_screen.password,
                   controller: passwordEditingController,
                   obscureText: true,
                 ),
@@ -148,6 +148,15 @@ class _AuthScreenState extends State<AuthScreen> {
                   onChanged: (value) {
                     saveCredentials = value;
                     },
+                    LabeledSwitch(
+                      label: t.auth_screen.save_credentials,
+                      initialValue: saveCredentials,
+                      onChanged: (value) {
+                        setState(() {
+                          saveCredentials = value;
+                        });
+                        },
+                    ),
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
@@ -167,9 +176,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.0),
-                    child: Text('Войти',
+                    child: Text(t.auth_screen.enter,
                       style: TextStyle(
                         fontSize: 16,
                       ),

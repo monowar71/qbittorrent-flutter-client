@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 
 class FilePickerSection extends StatelessWidget {
   const FilePickerSection({super.key});
@@ -18,7 +19,7 @@ class FilePickerSection extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () => context.read<AddTorrentBloc>().add(PickFileEvent()),
               icon: const Icon(Icons.folder_open),
-              label: const Text('Добавить файлы'),
+              label: Text(t.add_torrent_screen.file_picker_section.add_files_button_label),
             ),
           ],
         ),

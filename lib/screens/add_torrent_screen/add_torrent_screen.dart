@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/screens/add_torrent_screen/widgets/file_picker_section.dart';
 import 'package:qbittorrent_client/screens/add_torrent_screen/widgets/torrent_card.dart';
 
@@ -11,7 +12,7 @@ class AddTorrentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Добавить торрент'),
+        title: Text(t.add_torrent_screen.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,7 +49,7 @@ class AddTorrentScreen extends StatelessWidget {
                     onPressed: () {
                       context.read<AddTorrentBloc>().add(UploadTorrentEvent(settingsList: state.settingsList));
                     },
-                    child: const Text('Добавить все'),
+                    child: Text(t.add_torrent_screen.add_all_button),
                   ),
               ],
             );

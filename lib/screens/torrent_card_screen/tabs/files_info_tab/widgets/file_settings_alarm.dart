@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/file_priority.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
@@ -30,14 +31,14 @@ class FileSettingsDialogState extends State<FileSettingsDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Настройки файла'),
+      title: Text(t.torrent_card_screen.files_info_tab.file_settings_dialog.title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _nameController,
             decoration: InputDecoration(
-              labelText: 'Название файла',
+              labelText: t.torrent_card_screen.files_info_tab.file_settings_dialog.name_label,
               border: OutlineInputBorder(),
             ),
           ),
@@ -45,13 +46,13 @@ class FileSettingsDialogState extends State<FileSettingsDialog> {
           DropdownButtonFormField<int>(
             value: _priority,
             decoration: InputDecoration(
-              labelText: 'Приоритет',
+              labelText: t.torrent_card_screen.files_info_tab.file_settings_dialog.priority_label,
               border: OutlineInputBorder(),
             ),
             items: FilePriority.enumToJson.entries.map((entry) {
               return DropdownMenuItem<int>(
                 value: entry.value,
-                child: Text(FilePriority.localizedNames[entry.key] ?? 'Неизвестно'),
+                child: Text(FilePriority.localizedNames[entry.key] ?? t.torrent_card_screen.files_info_tab.file_settings_dialog.unknown),
               );
             }).toList(),
             onChanged: (value) {
@@ -63,7 +64,7 @@ class FileSettingsDialogState extends State<FileSettingsDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Отмена'),
+          child: Text(t.torrent_card_screen.files_info_tab.file_settings_dialog.cancel_button),
         ),
         ElevatedButton(
           onPressed: () {
@@ -81,7 +82,7 @@ class FileSettingsDialogState extends State<FileSettingsDialog> {
             );
             Navigator.of(context).pop();
           },
-          child: const Text('Подтвердить'),
+          child: Text(t.torrent_card_screen.files_info_tab.file_settings_dialog.confirm_button),
         ),
       ],
     );

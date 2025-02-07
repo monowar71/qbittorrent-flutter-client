@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrents/torrents_bloc.dart';
+import 'package:qbittorrent_client/i18n/strings.g.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
 import 'package:qbittorrent_client/screens/add_torrent_screen/add_torrent_screen.dart';
 import 'package:qbittorrent_client/screens/auth_screen/auth_screen.dart';
@@ -17,6 +18,7 @@ class QbittorrentClientApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: TranslationProvider.of(context).flutterLocale,
       initialRoute: '/auth',
       routes: {
         '/auth': (context) => BlocProvider(

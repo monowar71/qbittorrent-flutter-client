@@ -1,0 +1,117 @@
+{
+  "auth_screen": {
+    "title": "Qbittorrent Client",
+    "server_ip_or_dns": "Server IP or DDNS",
+    "port_number": "Port Number",
+    "https": "HTTPS",
+    "username": "Username",
+    "password": "Password",
+    "save_credentials": "Save?",
+    "enter_automatically": "Enter automatically?",
+    "enter": "Enter"
+  },
+  "torrent_list_screen": {
+    "title": "Torrent List",
+    "loading_torrents": "Loading torrents...",
+    "torrents_error": "Error loading torrents {error}",
+    "no_active_torrents": "No active torrents"
+  },
+  "torrent_card_screen": {
+    "title": "Torrent Details",
+    "base_info_tab_label": "Basic Info",
+    "files_info_tab_label": "Files",
+    "base_info_tab": {
+      "main_info_label": "Main Info",
+      "hash_label": "Hash",
+      "status_label": "Status",
+      "name_label": "Name",
+      "tags_label": "Tags",
+      "category_label": "Category",
+      "magnet_uri_label": "Magnet URI",
+      "save_path_label": "Save Path",
+      "seeds_peers_section_title": "Seeds/Peers",
+      "speed_section_title": "Speed",
+      "actions_section_title": "Actions",
+      "torrent_actions_buttons": {
+        "resume_button": "Resume",
+        "pause_button": "Pause",
+        "delete_button": "Delete",
+        "delete_confirmation_title": "Delete Torrent",
+        "delete_confirmation_message": "How do you want to delete?",
+        "delete_only_torrent": "Only Torrent",
+        "delete_torrent_and_files": "Torrent and Files",
+        "cancel_button": "Cancel"
+      },
+      "file_size_info": {
+        "total_size_label": "Total Size",
+        "ratio_label": "Ratio",
+        "completed_size_label": "Completed Size",
+        "remaining_size_label": "Remaining Size"
+      },
+      "seed_peers_info": {
+        "seeds_label": "Seeds:",
+        "peers_label": "Peers:"
+      }
+    },
+    "files_info_tab": {
+      "file_card": {
+        "size_label": "Size",
+        "priority_label": "Priority",
+        "progress_label": "Progress",
+        "seeding_label": "Seeding",
+        "available_label": "Available",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "file_settings_dialog": {
+        "title": "File Settings",
+        "name_label": "File Name",
+        "priority_label": "Priority",
+        "unknown": "Unknown",
+        "cancel_button": "Cancel",
+        "confirm_button": "Confirm"
+      }
+    }
+  },
+  "add_torrent_screen": {
+    "title": "Add Torrent",
+    "add_all_button": "Add All",
+    "file_picker_section": {
+      "add_files_button_label": "Add Files"
+    },
+    "torrent_card": {
+      "pause_at_start_label": "Pause at Start",
+      "skip_checking_label": "Skip Check"
+    }
+  },
+  "models": {
+    "torrent_state": {
+      "error": "Error",
+      "missing_files": "Missing Files",
+      "uploading": "Uploading",
+      "paused_up": "Upload Paused",
+      "queued_up": "Queued for Upload",
+      "stalled_up": "Upload Stalled",
+      "stopped_up": "Upload Stopped",
+      "checking_up": "Checking Upload",
+      "forced_up": "Forced Upload",
+      "allocating": "Allocating Space",
+      "downloading": "Downloading",
+      "meta_dl": "Downloading Metadata",
+      "stopped_dl": "Download Paused",
+      "queued_dl": "Queued for Download",
+      "stalled_dl": "Download Stalled",
+      "checking_dl": "Checking Download",
+      "forced_dl": "Forced Download",
+      "checking_resume_data": "Checking Data",
+      "moving": "Moving Files",
+      "unknown": "Unknown Status"
+    },
+    "file_priority": {
+      "dont_download": "Don't Download",
+      "normal": "Normal",
+      "high": "High",
+      "maximal": "Maximal"
+    }
+  }
+}

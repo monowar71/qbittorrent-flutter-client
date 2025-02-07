@@ -1,3 +1,5 @@
+import 'package:qbittorrent_client/i18n/strings.g.dart';
+
 enum FilePriority {
   dontDownload,
   normal,
@@ -30,11 +32,11 @@ enum FilePriority {
     return enumToJson[this];
   }
 
-  static const Map<FilePriority, String> localizedNames = {
-    FilePriority.dontDownload: 'Не загружать',
-    FilePriority.normal: 'Нормальный',
-    FilePriority.high: 'Высокий',
-    FilePriority.maximal: 'Максимальный'
+  static Map<FilePriority, String> localizedNames = {
+    FilePriority.dontDownload: t.models.file_priority.dont_download,
+    FilePriority.normal: t.models.file_priority.normal,
+    FilePriority.high: t.models.file_priority.high,
+    FilePriority.maximal: t.models.file_priority.maximal,
 
   };
 }
