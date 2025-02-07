@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:qbittorrent_client/models/file_priority.dart';
 
 part 'file_info.g.dart';
 
@@ -9,7 +10,8 @@ class FileInfo {
   final String name;
   final int size;
   final double progress;
-  final int priority;
+  @JsonKey(name: 'priority', fromJson: FilePriority.fromJson, toJson: FilePriority.toJson)
+  final FilePriority priority;
   @JsonKey(name: 'is_seed')
   final bool? isSeed;
   @JsonKey(name: 'piece_range')

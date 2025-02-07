@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:qbittorrent_client/models/torrent_state_enum.dart';
 
 part 'torrent_info.g.dart';
 
@@ -80,7 +81,8 @@ class TorrentInfo {
   @JsonKey(name: 'seq_dl')
   final bool? sequentialDownload;
   final int? size;
-  final String? state;
+  @JsonKey(name: 'state', fromJson: TorrentState.fromJson, toJson: TorrentState.toJson)
+  final TorrentState state;
   @JsonKey(name: 'super_seeding')
   final bool? superSeeding;
   final String? tags;

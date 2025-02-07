@@ -5,13 +5,13 @@ String? extractSID(String cookie) {
 }
 String convertHashesToString(List<String> hashes) {
   if (hashes.isEmpty) {
-    return 'all'; // Если список пуст, возвращаем "all"
+    return '';
   } else if (hashes.length == 1){
-      return hashes.first; // Если список не пуст, возвращаем первый элемент списка
+      return hashes.first;
   }
     else {
       return hashes.join('|');
-  }// Объединяем элементы списка через "|"
+  }
 }
 
 String formatBytes(int bytes) {
@@ -23,13 +23,13 @@ String formatBytes(int bytes) {
   if (bytes < kilobyte) {
     return "$bytes B"; // байты
   } else if (bytes < megabyte) {
-    return "${(bytes / kilobyte).toStringAsFixed(2)} KB"; // килобайты
+    return "${(bytes / kilobyte).toStringAsFixed(2)} KB";
   } else if (bytes < gigabyte) {
-    return "${(bytes / megabyte).toStringAsFixed(2)} MB"; // мегабайты
+    return "${(bytes / megabyte).toStringAsFixed(2)} MB";
   } else if (bytes < terabyte) {
-    return "${(bytes / gigabyte).toStringAsFixed(2)} GB"; // гигабайты
+    return "${(bytes / gigabyte).toStringAsFixed(2)} GB";
   } else {
-    return "${(bytes / terabyte).toStringAsFixed(2)} TB"; // терабайты
+    return "${(bytes / terabyte).toStringAsFixed(2)} TB";
   }
 }
 
@@ -41,10 +41,10 @@ String formatSpeed(int bytesPerSecond) {
   if (bytesPerSecond < kilobyte) {
     return "$bytesPerSecond B/s"; // байты в секунду
   } else if (bytesPerSecond < megabyte) {
-    return "${(bytesPerSecond / kilobyte).toStringAsFixed(2)} KB/s"; // килобайты в секунду
+    return "${(bytesPerSecond / kilobyte).toStringAsFixed(2)} KB/s";
   } else if (bytesPerSecond < gigabyte) {
-    return "${(bytesPerSecond / megabyte).toStringAsFixed(2)} MB/s"; // мегабайты в секунду
+    return "${(bytesPerSecond / megabyte).toStringAsFixed(2)} MB/s";
   } else {
-    return "${(bytesPerSecond / gigabyte).toStringAsFixed(2)} GB/s"; // гигабайты в секунду
+    return "${(bytesPerSecond / gigabyte).toStringAsFixed(2)} GB/s";
   }
 }

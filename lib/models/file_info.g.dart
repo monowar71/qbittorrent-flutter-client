@@ -11,7 +11,7 @@ FileInfo _$FileInfoFromJson(Map<String, dynamic> json) => FileInfo(
       name: json['name'] as String,
       size: (json['size'] as num).toInt(),
       progress: (json['progress'] as num).toDouble(),
-      priority: (json['priority'] as num).toInt(),
+      priority: FilePriority.fromJson((json['priority'] as num).toInt()),
       isSeed: json['is_seed'] as bool?,
       pieceRange: (json['piece_range'] as List<dynamic>)
           .map((e) => (e as num).toInt())
@@ -24,7 +24,7 @@ Map<String, dynamic> _$FileInfoToJson(FileInfo instance) => <String, dynamic>{
       'name': instance.name,
       'size': instance.size,
       'progress': instance.progress,
-      'priority': instance.priority,
+      'priority': FilePriority.toJson(instance.priority),
       'is_seed': instance.isSeed,
       'piece_range': instance.pieceRange,
       'availability': instance.availability,

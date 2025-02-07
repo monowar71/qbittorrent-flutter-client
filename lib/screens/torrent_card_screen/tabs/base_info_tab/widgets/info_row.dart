@@ -29,7 +29,7 @@ class InfoRow extends StatelessWidget {
                 fontSize: 12,
                 color: Colors.black,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.visible,
             ),
           ),
         ],
