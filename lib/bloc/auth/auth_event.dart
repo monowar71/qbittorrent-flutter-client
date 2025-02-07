@@ -12,6 +12,7 @@ class LoginEvent extends AuthEvent {
   final String serverPort;
   final bool isHTTPS;
   final bool isSaveCredentials;
+  final bool isEnterAutomatically;
 
   LoginEvent({
     required this.username,
@@ -19,10 +20,11 @@ class LoginEvent extends AuthEvent {
     required this.serverIp,
     required this.serverPort,
     required this.isHTTPS,
-    required this.isSaveCredentials});
+    required this.isSaveCredentials,
+    required this.isEnterAutomatically});
 
   @override
-  List<Object?> get props => [username, password, serverIp, serverPort, isHTTPS, isSaveCredentials];
+  List<Object?> get props => [username, password, serverIp, serverPort, isHTTPS, isSaveCredentials, isEnterAutomatically];
 }
 
 class TryRestoreLoginEvent extends AuthEvent {

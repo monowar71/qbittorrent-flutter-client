@@ -24,8 +24,12 @@ class _AuthScreenState extends State<AuthScreen> {
   final passwordEditingController = TextEditingController();
   bool https = false;
   bool saveCredentials = false;
+  bool enterAutomatically = false;
 
   void _tryGetStoringCredentials() async {
+      enterAutomatically = await localStorageRepository.getBool(Consts.keyEnterAutomatically) ?? false;
+      saveCredentials = await localStorageRepository.getBool(Consts.keySaveCredentials) ?? false;
+
       addressEditingController.text =
           await localStorageRepository.getString(Consts.keyAddress) ?? '';
       portEditingController.text =
@@ -36,7 +40,8 @@ class _AuthScreenState extends State<AuthScreen> {
       passwordEditingController.text =
           await localStorageRepository.getString(Consts.keyPassword) ?? '';
 
-      if(addressEditingController.text.isNotEmpty &&
+      if(enterAutomatically &&
+          addressEditingController.text.isNotEmpty &&
           portEditingController.text.isNotEmpty &&
           usernameEditingController.text.isNotEmpty &&
           passwordEditingController.text.isNotEmpty)
@@ -51,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
               serverPort: portEditingController.text,
               isHTTPS: https,
               isSaveCredentials: saveCredentials,
+              isEnterAutomatically: enterAutomatically,
             ));
       }
 
@@ -142,12 +148,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 12),
-                LabeledSwitch(
-                  label: 'Сохранить?',
-                  initialValue: saveCredentials,
-                  onChanged: (value) {
-                    saveCredentials = value;
-                    },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     LabeledSwitch(
                       label: t.auth_screen.save_credentials,
                       initialValue: saveCredentials,
@@ -157,6 +160,15 @@ class _AuthScreenState extends State<AuthScreen> {
                         });
                         },
                     ),
+                    if (saveCredentials)
+                      LabeledSwitch(
+                        label: t.auth_screen.enter_automatically,
+                        initialValue: enterAutomatically,
+                        onChanged: (value) {
+                          enterAutomatically = value;
+                        },
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
@@ -169,6 +181,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           serverPort: portEditingController.text,
                           isHTTPS: https,
                           isSaveCredentials: saveCredentials,
+                          isEnterAutomatically: enterAutomatically,
                         ));
                   },
                   style: ElevatedButton.styleFrom(

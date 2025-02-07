@@ -31,6 +31,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             Consts.keyUsername, event.username);
         await localStorageRepository.saveString(
             Consts.keyPassword, event.password);
+        await localStorageRepository.saveBool(
+          Consts.keySaveCredentials, event.isSaveCredentials);
+        await localStorageRepository.saveBool(
+          Consts.keyEnterAutomatically, event.isEnterAutomatically);
       }
       await api.login(
           address: event.serverIp,
