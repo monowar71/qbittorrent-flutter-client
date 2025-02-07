@@ -11,6 +11,8 @@ class TorrentFileInfoBloc extends Bloc<TorrentFileInfoEvent, TorrentFileInfoStat
 
   TorrentFileInfoBloc({required this.api}) : super(TorrentFileInfoInitial()) {
     on<FetchTorrentFileInfoEvent>(_onFetchTorrentFileInfoEvent);
+    on<RenameTorrentFileEvent>(_onRenameTorrentFileEvent);
+    on<SetFilePriorityEvent>(_onSetFilePriorityEvent);
   }
 
     Future<void> _onFetchTorrentFileInfoEvent(
@@ -25,4 +27,27 @@ class TorrentFileInfoBloc extends Bloc<TorrentFileInfoEvent, TorrentFileInfoStat
         emit(TorrentFileInfoError(error: e.toString()));
       }
     }
+
+    Future<void> _onRenameTorrentFileEvent(
+        RenameTorrentFileEvent event,
+        Emitter<TorrentFileInfoState> emit,
+        ) async {
+      try {
+        await api.renameFile(event.hash, event.oldName, event.newName);
+        add(FetchTorrentFileInfoEvent(hash: event.hash));
+      } catch (e) {
+        emit(TorrentFileInfoError(error: e.toString()));
+      }
+  }
+  Future<void> _onSetFilePriorityEvent(
+      SetFilePriorityEvent event,
+      Emitter<TorrentFileInfoState> emit,
+      ) async {
+    try {
+      await api.setFilePriority(event.hash, event.fileId, event.priority);
+      add(FetchTorrentFileInfoEvent(hash: event.hash));
+    } catch (e) {
+      emit(TorrentFileInfoError(error: e.toString()));
+    }
+  }
 }

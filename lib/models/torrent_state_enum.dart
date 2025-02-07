@@ -11,7 +11,7 @@ enum TorrentState {
   allocating,
   downloading,
   metaDL,
-  pausedDL,
+  stoppedDL,
   queuedDL,
   stalledDL,
   checkingDL,
@@ -21,15 +21,21 @@ enum TorrentState {
   unknown;
 
   static TorrentState fromJson(String value) {
-    return _enumToJson.entries
-        .firstWhere((entry) => entry.value == value,
-      orElse: () => MapEntry(TorrentState.unknown, 'unknown'),)
-        .key;
+    final entry = _enumToJson.entries.firstWhere(
+          (entry) => entry.value == value,
+      orElse: () {
+        print("Неизвестное состояние: $value");
+        return MapEntry(TorrentState.unknown, 'unknown');
+      },
+    );
+
+    return entry.key;
   }
 
   static String toJson(TorrentState state) => _enumToJson[state] ?? 'unknown';
 
-  String toLocalizedString() {
+  @override
+  String toString() {
     return _localizedNames[this] ?? 'Неизвестно';
   }
 
@@ -46,7 +52,7 @@ enum TorrentState {
     TorrentState.allocating: 'allocating',
     TorrentState.downloading: 'downloading',
     TorrentState.metaDL: 'metaDL',
-    TorrentState.pausedDL: 'pausedDL',
+    TorrentState.stoppedDL: 'stoppedDL',
     TorrentState.queuedDL: 'queuedDL',
     TorrentState.stalledDL: 'stalledDL',
     TorrentState.checkingDL: 'checkingDL',
@@ -69,7 +75,7 @@ enum TorrentState {
     TorrentState.allocating: 'Выделение места',
     TorrentState.downloading: 'Загрузка',
     TorrentState.metaDL: 'Загрузка метаданных',
-    TorrentState.pausedDL: 'Загрузка приостановлена',
+    TorrentState.stoppedDL: 'Загрузка приостановлена',
     TorrentState.queuedDL: 'В очереди на загрузку',
     TorrentState.stalledDL: 'Загрузка остановлена',
     TorrentState.checkingDL: 'Проверка загрузки',

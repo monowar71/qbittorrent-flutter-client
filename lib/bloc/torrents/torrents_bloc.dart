@@ -48,7 +48,6 @@ class TorrentsBloc extends Bloc<TorrentsEvent, TorrentsState> {
       ) async {
     try {
       await api.resumeTorrents(event.hash);
-      add(FetchTorrentInfoEvent(hash: event.hash));
     }
     catch (e) {
       emit(TorrentsError(error: e.toString()));
@@ -61,7 +60,6 @@ class TorrentsBloc extends Bloc<TorrentsEvent, TorrentsState> {
       ) async {
     try {
       await api.pauseTorrents(event.hash);
-      add(FetchTorrentInfoEvent(hash: event.hash));
     }
     catch (e) {
       emit(TorrentsError(error: e.toString()));

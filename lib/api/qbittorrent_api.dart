@@ -21,7 +21,8 @@ class QBittorrentApi {
   static const String _endpointTorrentFiles = "api/v2/torrents/files";
   static const String _endpointTorrentDelete = "api/v2/torrents/delete";
   static const String _endpointTorrentAdd = "api/v2/torrents/add";
-  static const String _endpointTorrentFilePrio = "api/v2/torrents/filePrio";
+  static const String _endpointSetFilePriority = "api/v2/torrents/filePrio";
+  static const String _endpointRenameFile = "api/v2/torrents/renameFile";
 
   String _buildBaseUrl(String address, String port, bool isHTTPS) {
     final protocol = isHTTPS ? 'https' : 'http';
@@ -178,6 +179,37 @@ class QBittorrentApi {
     if (response.statusCode == 200) {}
     else {
       throw Exception('Failed to delete torrents');
+    }
+  }
+  Future<void> renameFile(String hash, String oldPath, String newPath) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointRenameFile',
+      data: {
+        'hash': hash,
+        'oldPath': oldPath,
+        'newPath': newPath,
+      },
+      options: _authHeaders(),
+    );
+
+    if (response.statusCode == 200) {}
+    else {
+      throw Exception('Failed to Rename File');
+    }
+  }
+  Future<void> setFilePriority(String hash, String fileId, int priority) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointSetFilePriority',
+      data: {
+        'hash': hash,
+        'id': fileId,
+        'priority': priority
+      },
+      options: _authHeaders(),
+    );
+    if (response.statusCode == 200) {}
+    else {
+      throw Exception('Failed to set file priority');
     }
   }
 }

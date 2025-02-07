@@ -60,7 +60,7 @@ class _BaseInfoTabState extends State<BaseInfoTab> {
                 const SizedBox(height: 20),
                 const SectionHeader(title: 'Основная информация'),
                 InfoRow(label: 'Хеш', value: _currentTorrentInfo.hash!),
-                InfoRow(label: 'Статус', value: _currentTorrentInfo.state.toLocalizedString()),
+                InfoRow(label: 'Статус', value: _currentTorrentInfo.state.toString()),
                 InfoRow(label: 'Имя', value: _currentTorrentInfo.name!),
                 InfoRow(label: 'Тег', value: _currentTorrentInfo.tags!),
                 InfoRow(label: 'Категория', value: _currentTorrentInfo.category!),

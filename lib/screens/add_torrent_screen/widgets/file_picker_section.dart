@@ -13,12 +13,12 @@ class FilePickerSection extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
               onPressed: () => context.read<AddTorrentBloc>().add(PickFileEvent()),
               icon: const Icon(Icons.folder_open),
-              label: const Text('Выбрать файлы'),
+              label: const Text('Добавить файлы'),
             ),
           ],
         ),

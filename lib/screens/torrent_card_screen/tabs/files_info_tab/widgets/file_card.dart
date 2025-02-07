@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
 import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
 import 'package:qbittorrent_client/utils.dart';
@@ -50,7 +52,8 @@ class FileCard extends StatelessWidget {
                   Text(
                     'Прогресс: ${(file.progress * 100).toStringAsFixed(1)}%',
                     style: TextStyle(
-                        color: file.progress >= 1 ? Colors.green : Colors.orange,
+                        color: file.progress >= 1 ? Colors.green : Colors
+                            .orange,
                         fontSize: 14),
                   ),
                   Text(
@@ -81,10 +84,15 @@ class FileCard extends StatelessWidget {
       ),
     );
   }
+
   void _showFileSettingsDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) => FileSettingsDialog(),
+      builder: (BuildContext dialogContext) =>
+          BlocProvider.value(
+            value: context.read<TorrentFileInfoBloc>(),
+            child: FileSettingsDialog(fileInfo: file, torrent: torrentInfo,),
+          ),
     );
   }
 }

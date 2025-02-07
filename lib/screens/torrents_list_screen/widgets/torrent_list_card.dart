@@ -63,7 +63,7 @@ class TorrentListCard extends StatelessWidget {
                           color: Color.fromRGBO(7, 119, 245, 1.0),
                           fontWeight: FontWeight.bold,
                       )),
-                  Text(item.state!.toLocalizedString()),
+                  Text(item.state!.toString()),
                 ],
               ),
               SizedBox(height: 5),

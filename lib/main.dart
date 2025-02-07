@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/qbittorrent_client_app.dart';
 import 'package:qbittorrent_client/repositories/local_storage_repository.dart';
-import 'package:qbittorrent_client/repositories/qbittorrent_web_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/qbittorrent_api.dart';
