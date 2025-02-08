@@ -20,6 +20,8 @@ Future<void> main() async {
 
   GetIt.I.registerSingleton<QBittorrentApi>(QBittorrentApi(dio: GetIt.I.get<Dio>(),));
 
+  LocaleSettings.useDeviceLocale();
+
   runApp(TranslationProvider(child: QbittorrentClientApp()));
 }
 

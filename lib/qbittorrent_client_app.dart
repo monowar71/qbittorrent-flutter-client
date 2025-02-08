@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qbittorrent_client/bloc/add_torrent/add_torrent_bloc.dart';
 import 'package:qbittorrent_client/bloc/torrent_file_info/torrent_file_info_bloc.dart';
@@ -19,6 +20,8 @@ class QbittorrentClientApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: TranslationProvider.of(context).flutterLocale,
+      supportedLocales: AppLocaleUtils.supportedLocales,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       initialRoute: '/auth',
       routes: {
         '/auth': (context) => BlocProvider(

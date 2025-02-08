@@ -97,5 +97,10 @@
 			</dict>
 		</dict>
 	</array>
+	<key>CFBundleLocalizations</key>
+    <array>
+       <string>en</string>
+       <string>ru</string>
+    </array>
 </dict>
 </plist>
