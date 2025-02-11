@@ -43,7 +43,7 @@ class _TorrentsListScreenState extends State<TorrentsListScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is TorrentsError) {
-            return Center(child: Text(t.torrent_list_screen.torrents_error.replaceAll(state.error, '')));
+            return Center(child: Text(t.torrent_list_screen.torrents_error.replaceAll('{error}', state.error)));
           }
           if (state is TorrentsListInfoLoaded) {
             return ListView.builder(
