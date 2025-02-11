@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:qbittorrent_client/models/added_torrent_settings.dart';
 import 'package:qbittorrent_client/models/file_info.dart';
 import 'package:qbittorrent_client/models/torrent_info.dart';
+import 'package:qbittorrent_client/models/torrent_properties.dart';
 import 'package:qbittorrent_client/utils.dart';
 
 class QBittorrentApi {
@@ -19,6 +20,7 @@ class QBittorrentApi {
   static const String _endpointTorrentsPause = "api/v2/torrents/stop";
   static const String _endpointTorrentsResume = "api/v2/torrents/start";
   static const String _endpointTorrentFiles = "api/v2/torrents/files";
+  static const String _endpointTorrentProperties = "api/v2/torrents/properties";
   static const String _endpointTorrentDelete = "api/v2/torrents/delete";
   static const String _endpointTorrentAdd = "api/v2/torrents/add";
   static const String _endpointSetFilePriority = "api/v2/torrents/filePrio";
@@ -112,12 +114,25 @@ class QBittorrentApi {
       data: {'hash': hash},
       options: _authHeaders(),
     );
-
     if (response.statusCode == 200) {
       final data = response.data as List;
       return data.map((e) => FileInfo.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load torrent files');
+    }
+  }
+  Future<TorrentProperties> getTorrentProperties(String hash) async {
+    final response = await dio.post(
+      '$baseUrl/$_endpointTorrentProperties',
+      data: {'hash': hash},
+      options: _authHeaders(),
+    );
+    if (response.statusCode == 200) {
+      final data = response.data.first;
+      return TorrentProperties.fromJson(data);
+    }
+    else {
+      throw Exception('Failed to get torrent properties');
     }
   }
 

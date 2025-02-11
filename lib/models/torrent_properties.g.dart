@@ -1,0 +1,83 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'torrent_properties.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+TorrentProperties _$TorrentPropertiesFromJson(Map<String, dynamic> json) =>
+    TorrentProperties(
+      savePath: json['savePath'] as String?,
+      creationDate: (json['creationDate'] as num?)?.toInt(),
+      pieceSize: (json['pieceSize'] as num?)?.toInt(),
+      comment: json['comment'] as String?,
+      totalWasted: (json['totalWasted'] as num?)?.toInt(),
+      totalUploaded: (json['totalUploaded'] as num?)?.toInt(),
+      totalUploadedSession: (json['totalUploadedSession'] as num?)?.toInt(),
+      totalDownloaded: (json['totalDownloaded'] as num?)?.toInt(),
+      totalDownloadedSession: (json['totalDownloadedSession'] as num?)?.toInt(),
+      upLimit: (json['upLimit'] as num?)?.toInt(),
+      dlLimit: (json['dlLimit'] as num?)?.toInt(),
+      timeElapsed: (json['timeElapsed'] as num?)?.toInt(),
+      seedingTime: (json['seedingTime'] as num?)?.toInt(),
+      nbConnections: (json['nbConnections'] as num?)?.toInt(),
+      nbConnectionsLimit: (json['nbConnectionsLimit'] as num?)?.toInt(),
+      shareRatio: (json['shareRatio'] as num?)?.toDouble(),
+      additionDate: (json['additionDate'] as num?)?.toInt(),
+      completionDate: (json['completionDate'] as num?)?.toInt(),
+      createdBy: json['createdBy'] as String?,
+      dlSpeedAvg: (json['dlSpeedAvg'] as num?)?.toInt(),
+      dlSpeed: (json['dlSpeed'] as num?)?.toInt(),
+      eta: (json['eta'] as num?)?.toInt(),
+      lastSeen: (json['lastSeen'] as num?)?.toInt(),
+      peers: (json['peers'] as num?)?.toInt(),
+      peersTotal: (json['peersTotal'] as num?)?.toInt(),
+      piecesHave: (json['piecesHave'] as num?)?.toInt(),
+      piecesNum: (json['piecesNum'] as num?)?.toInt(),
+      reannounce: (json['reannounce'] as num?)?.toInt(),
+      seeds: (json['seeds'] as num?)?.toInt(),
+      seedsTotal: (json['seedsTotal'] as num?)?.toInt(),
+      totalSize: (json['totalSize'] as num?)?.toInt(),
+      upSpeedAvg: (json['upSpeedAvg'] as num?)?.toInt(),
+      upSpeed: (json['upSpeed'] as num?)?.toInt(),
+      isPrivate: json['isPrivate'] as bool?,
+    );
+
+Map<String, dynamic> _$TorrentPropertiesToJson(TorrentProperties instance) =>
+    <String, dynamic>{
+      'savePath': instance.savePath,
+      'creationDate': instance.creationDate,
+      'pieceSize': instance.pieceSize,
+      'comment': instance.comment,
+      'totalWasted': instance.totalWasted,
+      'totalUploaded': instance.totalUploaded,
+      'totalUploadedSession': instance.totalUploadedSession,
+      'totalDownloaded': instance.totalDownloaded,
+      'totalDownloadedSession': instance.totalDownloadedSession,
+      'upLimit': instance.upLimit,
+      'dlLimit': instance.dlLimit,
+      'timeElapsed': instance.timeElapsed,
+      'seedingTime': instance.seedingTime,
+      'nbConnections': instance.nbConnections,
+      'nbConnectionsLimit': instance.nbConnectionsLimit,
+      'shareRatio': instance.shareRatio,
+      'additionDate': instance.additionDate,
+      'completionDate': instance.completionDate,
+      'createdBy': instance.createdBy,
+      'dlSpeedAvg': instance.dlSpeedAvg,
+      'dlSpeed': instance.dlSpeed,
+      'eta': instance.eta,
+      'lastSeen': instance.lastSeen,
+      'peers': instance.peers,
+      'peersTotal': instance.peersTotal,
+      'piecesHave': instance.piecesHave,
+      'piecesNum': instance.piecesNum,
+      'reannounce': instance.reannounce,
+      'seeds': instance.seeds,
+      'seedsTotal': instance.seedsTotal,
+      'totalSize': instance.totalSize,
+      'upSpeedAvg': instance.upSpeedAvg,
+      'upSpeed': instance.upSpeed,
+      'isPrivate': instance.isPrivate,
+    };
