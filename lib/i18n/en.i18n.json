@@ -14,7 +14,12 @@
     "title": "Torrent List",
     "loading_torrents": "Loading torrents...",
     "torrents_error": "Error loading torrents {error}",
-    "no_active_torrents": "No active torrents"
+    "no_active_torrents": "No active torrents",
+    "sort_by": {
+      "name": "By Name",
+      "size": "By Size",
+      "date_added": "By Date Added"
+    }
   },
   "torrent_card_screen": {
     "title": "Torrent Details",

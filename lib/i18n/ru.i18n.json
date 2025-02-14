@@ -14,7 +14,12 @@
     "title": "Список торрентов",
     "loading_torrents": "Загрузка торрентов...",
     "torrents_error": "Ошибка загрузки торрентов {error}",
-    "no_active_torrents": "Нет активных торрентов"
+    "no_active_torrents": "Нет активных торрентов",
+    "sort_by": {
+      "name": "По названию",
+      "size": "По размеру",
+      "date_added": "По дате добавления"
+    }
   },
   "torrent_card_screen": {
     "title": "Детали торрента",

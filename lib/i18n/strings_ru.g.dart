@@ -69,6 +69,7 @@ class _TranslationsTorrentListScreenRu implements TranslationsTorrentListScreenE
 	@override String get loading_torrents => 'Загрузка торрентов...';
 	@override String get torrents_error => 'Ошибка загрузки торрентов {error}';
 	@override String get no_active_torrents => 'Нет активных торрентов';
+	@override late final _TranslationsTorrentListScreenSortByRu sort_by = _TranslationsTorrentListScreenSortByRu._(_root);
 }
 
 // Path: torrent_card_screen
@@ -107,6 +108,18 @@ class _TranslationsModelsRu implements TranslationsModelsEn {
 	// Translations
 	@override late final _TranslationsModelsTorrentStateRu torrent_state = _TranslationsModelsTorrentStateRu._(_root);
 	@override late final _TranslationsModelsFilePriorityRu file_priority = _TranslationsModelsFilePriorityRu._(_root);
+}
+
+// Path: torrent_list_screen.sort_by
+class _TranslationsTorrentListScreenSortByRu implements TranslationsTorrentListScreenSortByEn {
+	_TranslationsTorrentListScreenSortByRu._(this._root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get name => 'По названию';
+	@override String get size => 'По размеру';
+	@override String get date_added => 'По дате добавления';
 }
 
 // Path: torrent_card_screen.base_info_tab
@@ -296,6 +309,9 @@ extension on TranslationsRu {
 			case 'torrent_list_screen.loading_torrents': return 'Загрузка торрентов...';
 			case 'torrent_list_screen.torrents_error': return 'Ошибка загрузки торрентов {error}';
 			case 'torrent_list_screen.no_active_torrents': return 'Нет активных торрентов';
+			case 'torrent_list_screen.sort_by.name': return 'По названию';
+			case 'torrent_list_screen.sort_by.size': return 'По размеру';
+			case 'torrent_list_screen.sort_by.date_added': return 'По дате добавления';
 			case 'torrent_card_screen.title': return 'Детали торрента';
 			case 'torrent_card_screen.base_info_tab_label': return 'Основные';
 			case 'torrent_card_screen.files_info_tab_label': return 'Файлы';

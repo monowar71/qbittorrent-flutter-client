@@ -73,6 +73,7 @@ class TranslationsTorrentListScreenEn {
 	String get loading_torrents => 'Loading torrents...';
 	String get torrents_error => 'Error loading torrents {error}';
 	String get no_active_torrents => 'No active torrents';
+	late final TranslationsTorrentListScreenSortByEn sort_by = TranslationsTorrentListScreenSortByEn._(_root);
 }
 
 // Path: torrent_card_screen
@@ -111,6 +112,18 @@ class TranslationsModelsEn {
 	// Translations
 	late final TranslationsModelsTorrentStateEn torrent_state = TranslationsModelsTorrentStateEn._(_root);
 	late final TranslationsModelsFilePriorityEn file_priority = TranslationsModelsFilePriorityEn._(_root);
+}
+
+// Path: torrent_list_screen.sort_by
+class TranslationsTorrentListScreenSortByEn {
+	TranslationsTorrentListScreenSortByEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get name => 'By Name';
+	String get size => 'By Size';
+	String get date_added => 'By Date Added';
 }
 
 // Path: torrent_card_screen.base_info_tab
@@ -300,6 +313,9 @@ extension on Translations {
 			case 'torrent_list_screen.loading_torrents': return 'Loading torrents...';
 			case 'torrent_list_screen.torrents_error': return 'Error loading torrents {error}';
 			case 'torrent_list_screen.no_active_torrents': return 'No active torrents';
+			case 'torrent_list_screen.sort_by.name': return 'By Name';
+			case 'torrent_list_screen.sort_by.size': return 'By Size';
+			case 'torrent_list_screen.sort_by.date_added': return 'By Date Added';
 			case 'torrent_card_screen.title': return 'Torrent Details';
 			case 'torrent_card_screen.base_info_tab_label': return 'Basic Info';
 			case 'torrent_card_screen.files_info_tab_label': return 'Files';
